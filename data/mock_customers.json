@@ -1,0 +1,16 @@
+{
+  "cliente1988": {
+    "sales": {
+      "last_sale_id": "sale_9001",
+      "status": "approved",
+      "settlement_date": "2026-09-02",
+      "amount": 245.9
+    },
+    "terminal": {
+      "terminal_id": "term_101",
+      "model": "Get Smart",
+      "connection": "offline",
+      "last_sync": "2026-08-31T09:35:00-03:00"
+    }
+  }
+}
