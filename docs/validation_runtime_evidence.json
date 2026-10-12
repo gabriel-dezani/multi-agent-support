@@ -1,0 +1,4978 @@
+{
+  "test_partial_tool_success_survives_human_escalation": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_synthesis_exception_preserves_all_specialist_results": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_async_web_timeout_preserves_support_and_creates_ticket": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "web_search",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support",
+        "web_search"
+      ],
+      "agents_used": [
+        "customer_support",
+        "web_search",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_same_session_requests_observe_previous_committed_turn": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_pending_ticket_stops_repeated_tools_under_40_concurrent_requests": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_unicode_credentials_reject_without_internal_error": [],
+  "test_expired_local_credential_is_rejected": [],
+  "test_ten_turn_conversation_topic_switches_restart_and_isolation": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 0,
+        "hnsw_recovered": false
+      }
+    }
+  ],
+  "test_long_elliptical_dialogue_retains_topic_after_history_window": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_router_provider_failures_use_real_fallback[timeout]": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_router_provider_failures_use_real_fallback[malformed]": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_official_replanning_runs_review_and_web_once": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "web_search",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "web_search"
+      ],
+      "agents_used": [
+        "knowledge",
+        "web_search"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_private_data_never_reaches_public_search": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "web_search",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support",
+        "web_search"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "web_search",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2,
+        3
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 21,
+        "output_tokens": 9
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_handoff_resolution_ownership_concurrency_and_resume": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "human_escalation"
+      ],
+      "plan": [
+        "human_escalation"
+      ],
+      "agents_used": [
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [],
+      "reported_synthetic_usage": {},
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_pending_case_still_blocks_injection_without_persisting_or_calling_tools": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "human_escalation"
+      ],
+      "plan": [
+        "human_escalation"
+      ],
+      "agents_used": [
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [],
+      "reported_synthetic_usage": {},
+      "retrieval": {}
+    }
+  ],
+  "test_compiled_guardrail_blocks_before_any_provider_or_tool": [
+    {
+      "nodes": [
+        "guardrail"
+      ],
+      "plan": [],
+      "agents_used": [
+        "blocked"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [],
+      "reported_synthetic_usage": {},
+      "retrieval": {}
+    }
+  ],
+  "test_transaction_failure_rolls_back_ticket_and_human_message": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "human_escalation"
+      ],
+      "plan": [
+        "human_escalation"
+      ],
+      "agents_used": [
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [],
+      "reported_synthetic_usage": {},
+      "retrieval": {}
+    }
+  ],
+  "test_operator_endpoints_reject_customers[/metrics-get-None]": [],
+  "test_operator_endpoints_reject_customers[/handoffs-get-None]": [],
+  "test_operator_endpoints_reject_customers[/conversations/session?user_id=bob-get-None]": [],
+  "test_operator_endpoints_reject_customers[/traces/request-1-get-None]": [],
+  "test_spoofed_user_and_feedback_ownership": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_error_logs_and_response_do_not_contain_private_exception": [],
+  "test_full_trace_is_correlated_and_records_supervisor_decisions": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_total_deadline_is_a_safe_observed_failure": [],
+  "test_cost_requires_complete_reported_usage": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_trace_redacts_unrecognized_details_and_migrates_existing_database": [],
+  "test_parallel_users_and_sessions_stress": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge"
+      ],
+      "agents_used": [
+        "knowledge"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_intermitttent_customer_data_failure_stress": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_whitespace_chat_is_invalid[spaces]": [],
+  "test_whitespace_chat_is_invalid[tabs-newlines]": [],
+  "test_whitespace_chat_is_invalid[unicode-space]": [],
+  "test_whitespace_human_reply_cannot_resolve_ticket": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "human_escalation"
+      ],
+      "plan": [
+        "human_escalation"
+      ],
+      "agents_used": [
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [],
+      "reported_synthetic_usage": {},
+      "retrieval": {}
+    }
+  ],
+  "test_malformed_or_missing_authorization_is_rejected[None]": [],
+  "test_malformed_or_missing_authorization_is_rejected[Bearer unknown]": [],
+  "test_malformed_or_missing_authorization_is_rejected[Basic alice-test]": [],
+  "test_malformed_or_missing_authorization_is_rejected[Bearer ]": [],
+  "test_malformed_or_missing_authorization_is_rejected[bearer alice-test]": [],
+  "test_invalid_expiry_fails_closed[None]": [],
+  "test_invalid_expiry_fails_closed[not-a-date]": [],
+  "test_invalid_expiry_fails_closed[2026-10-12T12:00:00]": [],
+  "test_future_expiry_and_tool_identity_cannot_be_overridden": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_malformed_structured_planner_never_executes_arbitrary_nodes[None]": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_malformed_structured_planner_never_executes_arbitrary_nodes[parsed1]": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_malformed_structured_planner_never_executes_arbitrary_nodes[parsed2]": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_duplicate_planner_agents_do_not_repeat_specialists_or_tools": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "web_search",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support",
+        "web_search"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "web_search",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2,
+        3
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_web_malformed_generation_abstains[None]": [],
+  "test_web_malformed_generation_abstains[content1]": [],
+  "test_web_malformed_generation_abstains[ ]": [],
+  "test_external_search_instructions_are_never_system_messages": [],
+  "test_official_web_recovery_rejects_invalid_ports[https://site.getnet.com.br:444/pix/]": [],
+  "test_official_web_recovery_rejects_invalid_ports[https://site.getnet.com.br:invalid/pix/]": [],
+  "test_real_web_tool_http_contract_with_controlled_transport": [],
+  "test_web_without_usable_evidence_does_not_generate[rows0]": [],
+  "test_web_without_usable_evidence_does_not_generate[rows1]": [],
+  "test_web_without_usable_evidence_does_not_generate[rows2]": [],
+  "test_degraded_trace_preserves_safe_failure_code": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "human_escalation"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "human_escalation"
+      ],
+      "requires_human": true,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    }
+  ],
+  "test_total_deadline_also_bounds_waiting_for_same_session": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ],
+  "test_loopback_uvicorn_http_transport_with_real_graph": [
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "knowledge",
+        "review",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "agents_used": [
+        "knowledge",
+        "customer_support",
+        "synthesis"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1,
+        2
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 14,
+        "output_tokens": 6
+      },
+      "retrieval": {
+        "hits": 1,
+        "hnsw_recovered": false,
+        "max_score": 1.0,
+        "mean_score": 1.0
+      }
+    },
+    {
+      "nodes": [
+        "guardrail",
+        "router",
+        "customer_support",
+        "review",
+        "synthesis"
+      ],
+      "plan": [
+        "customer_support"
+      ],
+      "agents_used": [
+        "customer_support"
+      ],
+      "requires_human": false,
+      "supervisor_results_reviewed": [
+        1
+      ],
+      "reported_synthetic_usage": {
+        "input_tokens": 7,
+        "output_tokens": 3
+      },
+      "retrieval": {}
+    }
+  ]
+}

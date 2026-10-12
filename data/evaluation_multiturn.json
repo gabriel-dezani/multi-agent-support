@@ -1,0 +1,74 @@
+[
+  {
+    "id": "product_followup",
+    "user_id": "cliente1988",
+    "turns": [
+      {"message": "How does the Payment Link work?", "expected_route": "knowledge"},
+      {"message": "And can I use it on WhatsApp?", "expected_route": "knowledge"}
+    ]
+  },
+  {
+    "id": "support_followup",
+    "user_id": "cliente1988",
+    "turns": [
+      {"message": "My card machine will not connect to the internet", "expected_route": "customer_support"},
+      {"message": "And what should I do now?", "expected_route": "customer_support"}
+    ]
+  },
+  {
+    "id": "agentic_multi_intent",
+    "user_id": "cliente1988",
+    "turns": [
+      {"message": "Explain Pix and check yesterday's payout", "expected_route": "knowledge", "expected_plan": ["knowledge", "customer_support"]}
+    ]
+  },
+  {
+    "id": "sales_followup_chain", "user_id": "cliente1988",
+    "turns": [
+      {"message": "Minhas vendas de ontem", "expected_route": "customer_support"},
+      {"message": "E hoje?", "expected_route": "customer_support"},
+      {"message": "E quanto foi?", "expected_route": "customer_support"},
+      {"message": "E quanto deu?", "expected_route": "customer_support"},
+      {"message": "E o terminal?", "expected_route": "customer_support"}
+    ]
+  },
+  {
+    "id": "explicit_topic_switches", "user_id": "cliente1988",
+    "turns": [
+      {"message": "Problema na maquininha", "expected_route": "customer_support"},
+      {"message": "E quanto ao crediário?", "expected_route": "knowledge"},
+      {"message": "Como funciona o Pix?", "expected_route": "knowledge"},
+      {"message": "E isso?", "expected_route": "knowledge"}
+    ]
+  },
+  {
+    "id": "all_three_specialists", "user_id": "cliente1988",
+    "turns": [
+      {"message": "Explique Pix, minhas vendas, o terminal e a cotação do euro", "expected_route": "knowledge", "expected_plan": ["knowledge", "customer_support", "web_search"]},
+      {"message": "Como funciona o link de pagamento?", "expected_route": "knowledge", "expected_plan": ["knowledge"]}
+    ]
+  },
+  {
+    "id": "long_elliptical_chain", "user_id": "cliente1988",
+    "turns": [
+      {"message": "Minhas vendas de ontem", "expected_route": "customer_support"},
+      {"message": "E hoje?", "expected_route": "customer_support"},
+      {"message": "E quanto foi?", "expected_route": "customer_support"},
+      {"message": "E isso?", "expected_route": "customer_support"},
+      {"message": "E quanto deu?", "expected_route": "customer_support"},
+      {"message": "E agora?", "expected_route": "customer_support"},
+      {"message": "E isso?", "expected_route": "customer_support"},
+      {"message": "E hoje?", "expected_route": "customer_support"},
+      {"message": "E quanto foi?", "expected_route": "customer_support"},
+      {"message": "Qual foi o valor?", "expected_route": "customer_support"},
+      {"message": "Como funciona Pix?", "expected_route": "knowledge"}
+    ]
+  },
+  {
+    "id": "human_request_then_new_topic", "user_id": "cliente1988",
+    "turns": [
+      {"message": "Quero falar com atendente", "expected_route": "human_escalation"},
+      {"message": "Como funciona o Pix?", "expected_route": "knowledge"}
+    ]
+  }
+]

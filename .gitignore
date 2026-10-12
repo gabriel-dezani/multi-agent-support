@@ -9,3 +9,5 @@ htmlcov/
 .vector_data/
 .vscode/
 .idea/
+
+.state/

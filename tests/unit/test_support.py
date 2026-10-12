@@ -19,11 +19,12 @@ def test_support_escalates_unknown_customer():
     assert result["confidence"] == 0.2
 
 
-def test_support_escalates_mixed_support_intents():
+def test_support_executes_both_tools_on_mixed_support_intents():
     agent = CustomerSupportAgent(CustomerRepository())
     result = agent.process("My terminal is offline and I need to know yesterday's payout", "cliente1988")
-    assert result["requires_human"] is True
-    assert result["tools_used"] == []
+    assert result["requires_human"] is False
+    assert result["tools_used"] == ["get_terminal_status", "get_sales_data"]
+    assert "Terminal" in result["answer"] and "repasse" in result["answer"]
 
 
 def test_generic_support_does_not_guess_a_tool():

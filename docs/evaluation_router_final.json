@@ -1,0 +1,120 @@
+{
+  "mode": "router",
+  "route_accuracy": 1.0,
+  "cases": 10,
+  "latency_ms_total": 9.05,
+  "results": [
+    {
+      "id": "product",
+      "expected": "knowledge",
+      "predicted": "knowledge",
+      "plan": [
+        "knowledge"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "weather",
+      "expected": "web_search",
+      "predicted": "web_search",
+      "plan": [
+        "web_search"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "deposit",
+      "expected": "customer_support",
+      "predicted": "customer_support",
+      "plan": [
+        "customer_support"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "pix",
+      "expected": "knowledge",
+      "predicted": "knowledge",
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.65,
+      "ok": true
+    },
+    {
+      "id": "connection",
+      "expected": "customer_support",
+      "predicted": "customer_support",
+      "plan": [
+        "customer_support"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "advance",
+      "expected": "knowledge",
+      "predicted": "knowledge",
+      "plan": [
+        "knowledge"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "euro",
+      "expected": "web_search",
+      "predicted": "web_search",
+      "plan": [
+        "web_search"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "decline",
+      "expected": "customer_support",
+      "predicted": "customer_support",
+      "plan": [
+        "customer_support"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    },
+    {
+      "id": "installments",
+      "expected": "knowledge",
+      "predicted": "knowledge",
+      "plan": [
+        "knowledge",
+        "customer_support"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.65,
+      "ok": true
+    },
+    {
+      "id": "whatsapp",
+      "expected": "knowledge",
+      "predicted": "knowledge",
+      "plan": [
+        "knowledge"
+      ],
+      "strategy": "deterministic_fallback",
+      "routing_confidence": 0.75,
+      "ok": true
+    }
+  ]
+}

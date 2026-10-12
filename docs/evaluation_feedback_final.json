@@ -1,0 +1,237 @@
+{
+  "cases": 20,
+  "passed": 20,
+  "accuracy": 1.0,
+  "results": [
+    {
+      "id": "pix_sales",
+      "passed": true,
+      "expected": [
+        "knowledge",
+        "customer_support"
+      ],
+      "actual": [
+        "knowledge",
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "pix_payout",
+      "passed": true,
+      "expected": [
+        "knowledge",
+        "customer_support"
+      ],
+      "actual": [
+        "knowledge",
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "terminal_fx",
+      "passed": true,
+      "expected": [
+        "customer_support",
+        "web_search"
+      ],
+      "actual": [
+        "customer_support",
+        "web_search"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "full_multi",
+      "passed": true,
+      "expected": [
+        "knowledge",
+        "customer_support",
+        "web_search"
+      ],
+      "actual": [
+        "knowledge",
+        "customer_support",
+        "web_search"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "public_knowledge",
+      "passed": true,
+      "expected": [
+        "knowledge"
+      ],
+      "actual": [
+        "knowledge"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "private_sales",
+      "passed": true,
+      "expected": [
+        "customer_support"
+      ],
+      "actual": [
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "private_terminal",
+      "passed": true,
+      "expected": [
+        "customer_support"
+      ],
+      "actual": [
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "public_currency",
+      "passed": true,
+      "expected": [
+        "web_search"
+      ],
+      "actual": [
+        "web_search"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "human_request",
+      "passed": true,
+      "expected": [
+        "human_escalation"
+      ],
+      "actual": [
+        "human_escalation"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "new_topic_knowledge",
+      "passed": true,
+      "expected": [
+        "knowledge"
+      ],
+      "actual": [
+        "knowledge"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "new_topic_web",
+      "passed": true,
+      "expected": [
+        "web_search"
+      ],
+      "actual": [
+        "web_search"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "topic_switch_support",
+      "passed": true,
+      "expected": [
+        "customer_support"
+      ],
+      "actual": [
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "anaphora_support",
+      "passed": true,
+      "expected": [
+        "customer_support"
+      ],
+      "actual": [
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "human_not_inherited",
+      "passed": true,
+      "expected": [
+        "knowledge"
+      ],
+      "actual": [
+        "knowledge"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "web_private_payload",
+      "passed": true,
+      "expected": [
+        "web_search"
+      ],
+      "actual": [
+        "web_search"
+      ],
+      "public_query": "current USD BRL exchange rate"
+    },
+    {
+      "id": "web_private_unknown",
+      "passed": true,
+      "expected": [
+        "knowledge"
+      ],
+      "actual": [
+        "knowledge"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "consecutive_ellipses",
+      "passed": true,
+      "expected": [
+        "customer_support"
+      ],
+      "actual": [
+        "customer_support"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "explicit_pix_after_sales",
+      "passed": true,
+      "expected": [
+        "knowledge"
+      ],
+      "actual": [
+        "knowledge"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "followup_after_pix_switch",
+      "passed": true,
+      "expected": [
+        "knowledge"
+      ],
+      "actual": [
+        "knowledge"
+      ],
+      "public_query": null
+    },
+    {
+      "id": "terminal_followup",
+      "passed": true,
+      "expected": [
+        "customer_support"
+      ],
+      "actual": [
+        "customer_support"
+      ],
+      "public_query": null
+    }
+  ]
+}

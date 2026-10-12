@@ -1,0 +1,60 @@
+{
+  "source_mode": "public Getnet HTTPS requests through production ingestion; real persistent Chroma; deterministic synthetic embeddings; no LLM generation",
+  "paid_provider_calls": 0,
+  "sources_attempted": 7,
+  "sources_indexed": 7,
+  "stored_chunks": 36,
+  "retrieval_results": 4,
+  "results": [
+    {
+      "url": "https://www.getnet.net/en",
+      "status": "indexed",
+      "chunks": 6,
+      "stale_removed": 0,
+      "elapsed_ms": 2117.88
+    },
+    {
+      "url": "https://site.getnet.com.br/pix/",
+      "status": "indexed",
+      "chunks": 4,
+      "stale_removed": 0,
+      "elapsed_ms": 277.08
+    },
+    {
+      "url": "https://site.getnet.com.br/link-de-pagamento/",
+      "status": "indexed",
+      "chunks": 6,
+      "stale_removed": 0,
+      "elapsed_ms": 271.54
+    },
+    {
+      "url": "https://site.getnet.com.br/conta-digital/",
+      "status": "indexed",
+      "chunks": 4,
+      "stale_removed": 0,
+      "elapsed_ms": 319.13
+    },
+    {
+      "url": "https://site.getnet.com.br/crediario/",
+      "status": "indexed",
+      "chunks": 9,
+      "stale_removed": 0,
+      "elapsed_ms": 332.04
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+      "status": "indexed",
+      "chunks": 4,
+      "stale_removed": 0,
+      "elapsed_ms": 361.2
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/",
+      "status": "indexed",
+      "chunks": 3,
+      "stale_removed": 0,
+      "elapsed_ms": 271.06
+    }
+  ],
+  "semantic_relevance_validated": false
+}

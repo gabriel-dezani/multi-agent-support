@@ -1,0 +1,43 @@
+{
+  "evaluation_date": "2026-10-12",
+  "baseline": "V5 + feedback original + desafio oficial",
+  "pytest": {
+    "passed": 69,
+    "skipped": 7,
+    "reason": "Dependências LangGraph/LangChain ausentes. Testes integrados não executados."
+  },
+  "classification_offline": {
+    "original": {
+      "passed": 10,
+      "total": 10
+    },
+    "multiturn": {
+      "passed": 5,
+      "total": 5
+    },
+    "feedback_v6": {
+      "passed": 16,
+      "total": 16
+    }
+  },
+  "test_assertions": {
+    "fastapi_sqlite_with_fake_graph": 25,
+    "graph_nodes_with_emulated_transitions": 24,
+    "grounded_knowledge_fake_providers": 9,
+    "web_search_privacy_fake_providers": 7
+  },
+  "stress": {
+    "rounds": 3,
+    "parallel_http_handoff_requests_per_round": 60,
+    "parallel_handoff_resolutions_per_round": 40,
+    "result": "3/3 rounds passed; graph simulated"
+  },
+  "not_executed": [
+    "Codex executor",
+    "real LangGraph runtime",
+    "actual OpenAI/Tavily/Chroma calls",
+    "Docker build/start/restart",
+    "judge calibration"
+  ],
+  "status": "Local verification passed on executed components; not an end-to-end certification."
+}

@@ -11,6 +11,7 @@ class GuardrailAgent:
     """
 
     PATTERNS = (
+        r"\b(ignore|desconsidere|esqueca)\b.{0,80}\b(instrucoes|regras|mensagem|prompt)\b.{0,40}\b(anteriores|previas|sistema|desenvolvedor)\b",
         r"\bignore\b.{0,80}\b(previous|prior|earlier)\b.{0,40}\b(instruction|instructions|prompt|rules)\b",
         r"\bdisregard\b.{0,80}\b(system|developer|previous|prior)\b.{0,40}\b(instruction|instructions|message|prompt)\b",
         r"\bforget\b.{0,50}\b(previous|prior|above)\b.{0,30}\b(instruction|instructions)\b",

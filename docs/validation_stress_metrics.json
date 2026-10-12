@@ -1,0 +1,122 @@
+{
+  "provider_mode": "synthetic LLMs, synthetic embeddings, synthetic customer repository; actual FastAPI/LangGraph/Chroma/SQLite",
+  "exit_code": 0,
+  "summary": [
+    "92 passed, 5710 warnings in 118.72s (0:01:58)"
+  ],
+  "metrics": [
+    {
+      "kind": "FINAL_HANDOFF_CREATE_STRESS",
+      "data": {
+        "operations": 40,
+        "errors": 0,
+        "tickets": 1,
+        "graph_invocations": 1,
+        "tool_repository_reads": 2,
+        "wall_ms": 1681.03,
+        "p50_ms": 185.86,
+        "p95_ms": 1489.02
+      }
+    },
+    {
+      "kind": "FINAL_HANDOFF_RESOLVE_STRESS",
+      "data": {
+        "operations": 40,
+        "errors": 0,
+        "human_replies": 1,
+        "wall_ms": 502.09,
+        "p50_ms": 14.88,
+        "p95_ms": 429.96
+      }
+    },
+    {
+      "kind": "FINAL_API_STRESS",
+      "data": {
+        "operations": 100,
+        "errors": 0,
+        "sessions": 20,
+        "users": 2,
+        "wall_ms": 2613.25,
+        "p50_ms": 33.06,
+        "p95_ms": 1503.33
+      }
+    },
+    {
+      "kind": "FINAL_INTERMITTENT_STRESS",
+      "data": {
+        "operations": 40,
+        "errors": 0,
+        "intentional_handoffs": 5,
+        "p50_ms": 63.02,
+        "p95_ms": 1274.99
+      }
+    },
+    {
+      "kind": "FINAL_LOOPBACK_HTTP",
+      "data": {
+        "requests": 4,
+        "errors": 0,
+        "chat_requests": 2,
+        "real_uvicorn": true
+      }
+    },
+    {
+      "kind": "RAG_STRESS",
+      "data": {
+        "distinct_vectors": false,
+        "raw_native_failures": 11,
+        "recovered_query_failures": 0,
+        "persisted_chunks": 160,
+        "phases": {
+          "ingest": {
+            "operations": 80,
+            "total_ms": 1433.06,
+            "median_ms": 15.683,
+            "p95_ms": 26.497
+          },
+          "update": {
+            "operations": 240,
+            "total_ms": 12319.18,
+            "median_ms": 59.135,
+            "p95_ms": 80.876
+          },
+          "query": {
+            "operations": 300,
+            "total_ms": 1713.48,
+            "median_ms": 5.475,
+            "p95_ms": 10.282
+          }
+        }
+      }
+    },
+    {
+      "kind": "RAG_STRESS",
+      "data": {
+        "distinct_vectors": true,
+        "raw_native_failures": 2,
+        "recovered_query_failures": 0,
+        "persisted_chunks": 160,
+        "phases": {
+          "ingest": {
+            "operations": 80,
+            "total_ms": 1320.39,
+            "median_ms": 15.528,
+            "p95_ms": 21.139
+          },
+          "update": {
+            "operations": 240,
+            "total_ms": 10211.95,
+            "median_ms": 49.836,
+            "p95_ms": 66.631
+          },
+          "query": {
+            "operations": 300,
+            "total_ms": 525.82,
+            "median_ms": 1.686,
+            "p95_ms": 2.168
+          }
+        }
+      }
+    }
+  ]
+}

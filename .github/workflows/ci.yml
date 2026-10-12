@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Require integration dependencies (no silent skipped tests)
+        run: python -c "import langgraph, langchain_core, langchain_openai, chromadb, structlog"
+      - name: Compile
+        run: python -m compileall -q app scripts tests
+      - name: Test with coverage (skipped modules are a CI failure)
+        run: |
+          python -m pytest -q --cov=app --cov-report=term-missing -rA > pytest-results.txt
+          cat pytest-results.txt
+          if grep -Eq '([1-9][0-9]* skipped|SKIPPED)' pytest-results.txt; then
+            echo 'Unexpected skipped tests' >&2; exit 1
+          fi
+      - name: Feedback V6 regression quality gate
+        run: python -m scripts.evaluate_feedback_v6
+      - name: Routing evaluation (10 challenge examples)
+        run: |
+          python -m scripts.evaluate --mode router --output routing_ci.json
+          python -c "import json; assert json.load(open('routing_ci.json'))['route_accuracy'] == 1.0"
+      - name: Multi-turn evaluation
+        run: |
+          python -m scripts.evaluate_multiturn --mode router --output multiturn_ci.json
+          python -c "import json; assert json.load(open('multiturn_ci.json'))['turn_accuracy'] == 1.0"
+      - name: HTTP security, handoff and memory smoke
+        run: python -m scripts.offline_api_smoke
+      - name: External search privacy boundary
+        run: python -m scripts.offline_web_privacy_smoke
+      - name: Graph node regression smoke
+        run: python -m scripts.offline_graph_smoke
+      - name: Grounded RAG contract smoke
+        run: python -m scripts.offline_rag_smoke
+      - name: Parallel HTTP ticket stress
+        run: python -m scripts.offline_api_stress
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t multi-agent-support:ci .
+      - name: Verify writable non-root Docker volumes
+        run: |
+          docker run --rm -v v6_ci_state:/app/.state -v v6_ci_vectors:/app/.vector_data \
+            --entrypoint python multi-agent-support:ci -c \
+            "from pathlib import Path; Path('/app/.state/probe').write_text('ok'); Path('/app/.vector_data/probe').write_text('ok')"
+          docker volume rm v6_ci_state v6_ci_vectors
+      - name: Boot container and check health endpoint
+        run: |
+          docker run -d --name v6_ci_health multi-agent-support:ci
+          for attempt in $(seq 1 20); do
+            if docker exec v6_ci_health python -c "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2).status == 200"; then
+              docker rm -f v6_ci_health
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs v6_ci_health
+          docker rm -f v6_ci_health
+          exit 1

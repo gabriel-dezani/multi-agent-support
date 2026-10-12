@@ -1,0 +1,22 @@
+[
+  {"id":"pix_sales","message":"Eu gostaria de saber sobre Pix e as minhas vendas","expected_plan":["knowledge","customer_support"]},
+  {"id":"pix_payout","message":"Explique Pix e o repasse das vendas de ontem","expected_plan":["knowledge","customer_support"]},
+  {"id":"terminal_fx","message":"Minha maquininha não conecta e preciso da cotação do dólar","expected_plan":["customer_support","web_search"]},
+  {"id":"full_multi","message":"Explique Pix, minhas vendas e a cotação do euro","expected_plan":["knowledge","customer_support","web_search"]},
+  {"id":"public_knowledge","message":"Como funciona o crediário Getnet?","expected_plan":["knowledge"]},
+  {"id":"private_sales","message":"Quantas vendas fiz ontem?","expected_plan":["customer_support"]},
+  {"id":"private_terminal","message":"Minha maquininha não conecta","expected_plan":["customer_support"]},
+  {"id":"public_currency","message":"Qual é a cotação do dólar?","expected_plan":["web_search"]},
+  {"id":"human_request","message":"Quero falar com um atendente","expected_plan":["human_escalation"]},
+  {"id":"new_topic_knowledge","message":"E quanto ao crediário?","previous_users":["Minha maquininha não conecta","Como funciona o Pix?"],"expected_plan":["knowledge"]},
+  {"id":"new_topic_web","message":"E o câmbio do dólar?","previous_users":["Minha maquininha não conecta","Como funciona o Pix?"],"expected_plan":["web_search"]},
+  {"id":"topic_switch_support","message":"E as minhas vendas?","previous_users":["Como funciona o Pix?"],"expected_plan":["customer_support"]},
+  {"id":"anaphora_support","message":"And what should I do now?","previous_users":["My card machine will not connect to the internet"],"expected_plan":["customer_support"]},
+  {"id":"human_not_inherited","message":"Como funciona o Pix?","previous_users":["Quero falar com atendente"],"expected_plan":["knowledge"]},
+  {"id":"web_private_payload","message":"Qual a cotação do dólar para o CPF 12345678909?","expected_plan":["web_search"],"expected_public_query":"current USD BRL exchange rate"},
+  {"id":"web_private_unknown","message":"Pesquise o extrato da conta CPF 12345678909","expected_plan":["knowledge"],"expected_public_query":null},
+  {"id":"consecutive_ellipses","message":"E quanto foi?","previous_users":["Minhas vendas de ontem","E hoje?"],"expected_plan":["customer_support"]},
+  {"id":"explicit_pix_after_sales","message":"E isso no Pix?","previous_users":["Minhas vendas de ontem","E hoje?"],"expected_plan":["knowledge"]},
+  {"id":"followup_after_pix_switch","message":"E quanto foi?","previous_users":["Minhas vendas de ontem","E isso no Pix?"],"expected_plan":["knowledge"]},
+  {"id":"terminal_followup","message":"E o terminal?","previous_users":["Minhas vendas de ontem"],"expected_plan":["customer_support"]}
+]

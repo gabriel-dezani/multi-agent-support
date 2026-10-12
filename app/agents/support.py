@@ -1,5 +1,14 @@
+"""Customer-support tools only see the authenticated user_id supplied by the API.
+
+No LLM decides tool arguments. Independent terminal and sales requests can
+both execute; a tool failure preserves successful evidence and creates a
+human handoff for the unresolved portion.
+"""
+from time import perf_counter
 import re
 import unicodedata
+
+from app.orchestration.context import contextual_user_anchor
 from app.repositories.customer_repository import CustomerRepository
 from app.tools.sales import get_sales_data
 from app.tools.terminal import get_terminal_status
@@ -15,7 +24,7 @@ class CustomerSupportAgent:
     SALES_TERMS = (
         "deposito", "deposit", "vendas de ontem", "yesterday's sales",
         "sales from yesterday", "payout", "settlement", "repasse", "recebimento",
-        "venda", "sale", "sales", "pagamento", "payment",
+        "venda", "vendas", "sale", "sales", "pagamento", "payment",
     )
 
     def __init__(self, repository=None):
@@ -29,74 +38,70 @@ class CustomerSupportAgent:
 
     @classmethod
     def _matches(cls, text: str, terms: tuple[str, ...]) -> bool:
-        for term in terms:
-            n = cls._normalize(term)
-            if re.search(rf"(?<!\w){re.escape(n)}(?!\w)", text):
-                return True
-        return False
+        return any(
+            re.search(rf"(?<!\w){re.escape(cls._normalize(term))}(?!\w)", text)
+            for term in terms
+        )
 
-    def process(self, message, user_id):
-        normalized = self._normalize(message)
-        terminal = self._matches(normalized, self.TERMINAL_TERMS)
-        sales = self._matches(normalized, self.SALES_TERMS)
-
-        # Mixed support intents are unsafe to resolve with a single tool.
-        if terminal and sales:
+    def process(self, message, user_id, history=None):
+        explicit_topic = (self._matches(self._normalize(message), self.TERMINAL_TERMS) or
+                          self._matches(self._normalize(message), self.SALES_TERMS))
+        recent_user = "" if explicit_topic else contextual_user_anchor(message, history)
+        normalized = self._normalize(f"{recent_user} {message}".strip())
+        selected = []
+        if self._matches(normalized, self.TERMINAL_TERMS):
+            selected.append(("get_terminal_status", get_terminal_status))
+        if self._matches(normalized, self.SALES_TERMS):
+            selected.append(("get_sales_data", get_sales_data))
+        if not selected:
             return {
-                "answer": "Sua solicitação envolve mais de um tipo de atendimento. Ela será encaminhada para um atendente humano.",
-                "tools_used": [],
-                "confidence": 0.0,
-                "requires_human": True,
-                "handoff_reason": "A mensagem combina suporte de terminal e dados de vendas.",
+                "answer": "Não consegui identificar uma consulta de suporte segura. Vou encaminhar para um atendente.",
+                "tools_used": [], "confidence": 0.0, "requires_human": True,
+                "handoff_reason": "Nenhuma ferramenta de suporte foi identificada com segurança.",
             }
 
-        if not terminal and not sales:
-            return {
-                "answer": "Não consegui determinar com segurança qual consulta de suporte deve ser realizada. A solicitação será encaminhada para um atendente humano.",
-                "tools_used": [],
-                "confidence": 0.0,
-                "requires_human": True,
-                "handoff_reason": "Intenção de suporte insuficientemente específica para selecionar uma tool.",
-            }
+        answers, errors, spans = [], [], []
+        for name, tool in selected:
+            started = perf_counter()
+            try:
+                result = tool(user_id, self.repository)
+                if not result.ok:
+                    errors.append(f"{name}: {result.error or 'unavailable'}")
+                    status = "unavailable"
+                else:
+                    data = result.data
+                    if name == "get_terminal_status":
+                        answers.append(
+                            f"[Dados demonstrativos] Terminal {data.get('model')}: conexão {data.get('connection')} "
+                            f"e última sincronização {data.get('last_sync')}."
+                        )
+                    else:
+                        answers.append(
+                            f"[Dados demonstrativos] Venda registrada no exemplo com status {data.get('status')}, valor "
+                            f"R$ {data.get('amount', 0):.2f} e previsão de repasse em "
+                            f"{data.get('settlement_date')}."
+                        )
+                    status = "ok"
+            except Exception as exc:
+                errors.append(f"{name}: {type(exc).__name__}")
+                status = "error"
+            spans.append({
+                "agent": "tool:" + name,
+                "duration_ms": round((perf_counter() - started) * 1000, 2),
+                "status": status,
+            })
 
-        use_terminal = terminal
-        name = "get_terminal_status" if use_terminal else "get_sales_data"
-        try:
-            result = get_terminal_status(user_id, self.repository) if use_terminal else get_sales_data(user_id, self.repository)
-        except Exception as exc:
-            return {
-                "answer": "Não foi possível consultar os dados de suporte. A solicitação será encaminhada para atendimento humano.",
-                "tools_used": [name],
-                "confidence": 0.0,
-                "requires_human": True,
-                "errors": [f"support_tool: {type(exc).__name__}"],
-                "handoff_reason": "Falha controlada durante a execução da tool de suporte.",
-            }
-        if not result.ok:
-            answer = "Cliente não encontrado." if result.error == "customer_not_found" else "Não foi possível consultar os dados. A solicitação será encaminhada para atendimento humano."
-            return {
-                "answer": answer,
-                "tools_used": [name],
-                "confidence": 0.2,
-                "requires_human": True,
-                "handoff_reason": "A consulta à tool de suporte não pôde ser concluída.",
-            }
-
-        data = result.data
-        if use_terminal:
-            answer = (
-                f"Terminal {data.get('model')}: conexão {data.get('connection')} "
-                f"e última sincronização {data.get('last_sync')}."
-            )
-        else:
-            answer = (
-                f"Venda com status {data.get('status')}, valor "
-                f"R$ {data.get('amount', 0):.2f} e previsão de repasse em "
-                f"{data.get('settlement_date')}."
-            )
+        missing = bool(errors)
+        partial_answer = "\n".join(answers) if missing else ""
+        if missing:
+            answers.append("Uma ou mais consultas não puderam ser concluídas; vou encaminhar a parte pendente ao atendimento humano.")
         return {
-            "answer": answer,
-            "tools_used": [name],
-            "confidence": 0.95,
-            "requires_human": False,
+            "answer": "\n".join(answers),
+            "partial_answer": partial_answer,
+            "tools_used": [name for name, _ in selected],
+            "tool_spans": spans,
+            "confidence": 0.95 if not missing else (0.2 if not answers[:-1] else 0.5),
+            "requires_human": missing,
+            "handoff_reason": "Falha em ferramentas de suporte: " + ", ".join(errors) if missing else "",
+            "errors": errors,
         }

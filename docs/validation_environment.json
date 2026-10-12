@@ -1,0 +1,18 @@
+{
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "executable": "C:\\Users\\Nitro\\Downloads\\Projetos\\multi-agent-support\\.venv\\Scripts\\python.exe",
+  "packages": {
+    "chromadb": "0.6.3",
+    "chroma-hnswlib": "0.7.6",
+    "langchain-chroma": "0.2.3",
+    "posthog": "5.4.0",
+    "langgraph": "0.6.11",
+    "langchain-core": "0.3.86",
+    "langchain-openai": "0.3.35",
+    "fastapi": "0.143.0",
+    "pydantic": "2.14.1",
+    "pytest": "8.4.2"
+  },
+  "pip_check": "No broken requirements found",
+  "paid_provider_calls": 0
+}
