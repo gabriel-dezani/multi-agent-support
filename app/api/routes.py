@@ -6,16 +6,19 @@ import asyncio
 import sqlite3
 from uuid import uuid4
 import structlog
-from fastapi import APIRouter, Depends, HTTPException, Header, Query
+from fastapi import APIRouter, Depends, HTTPException, Header, Query, Security
+from fastapi.security import HTTPAuthorizationCredentials
 from structlog.contextvars import bind_contextvars, clear_contextvars
 from app.api.schemas import ChatRequest, ChatResponse, HandoffResolveRequest, FeedbackRequest
-from app.core.auth import resolve_identity, assert_customer
+from app.core.auth import resolve_identity, authenticated_identity, assert_customer, _bearer_scheme
 from app.core.config import get_settings
 from app.core.metrics import metrics
 from app.core.telemetry import TelemetryRepository
 from app.core.usage import cost_usd
 from app.core.security import operator_token_is_valid, user_ref
 from app.core.session_lock import conversation_lock
+from app.core.distributed_lock import postgres_conversation_lock
+from app.core.upstream import UpstreamUnavailable
 from app.handoff.repository import HandoffRepository
 from app.memory.store import ConversationMemoryStore
 from app.orchestration.graph import build_graph
@@ -39,37 +42,54 @@ def graph():
 def memory_store():
     global _memory
     if _memory is None:
-        _memory = ConversationMemoryStore()
+        settings = get_settings()
+        if getattr(settings, "state_backend", "sqlite") == "postgres":
+            from app.core.postgres_state import PostgresConversationMemoryStore
+            _memory = PostgresConversationMemoryStore(settings.state_database_url)
+        else:
+            _memory = ConversationMemoryStore()
     return _memory
 
 
 def handoff_store():
     global _handoffs
     if _handoffs is None:
-        _handoffs = HandoffRepository()
+        settings = get_settings()
+        if getattr(settings, "state_backend", "sqlite") == "postgres":
+            from app.core.postgres_state import PostgresHandoffRepository
+            _handoffs = PostgresHandoffRepository(settings.state_database_url)
+        else:
+            _handoffs = HandoffRepository()
     return _handoffs
 
 
 def telemetry_store():
     global _telemetry
     if _telemetry is None:
-        _telemetry = TelemetryRepository()
+        settings = get_settings()
+        if getattr(settings, "state_backend", "sqlite") == "postgres":
+            from app.core.postgres_state import PostgresTelemetryRepository
+            _telemetry = PostgresTelemetryRepository(settings.state_database_url)
+        else:
+            _telemetry = TelemetryRepository()
     return _telemetry
 
 
-def require_operator(authorization: str | None = Header(default=None),
-                     x_operator_token: str = Header(default="")) -> dict:
+def require_operator(
+    x_operator_token: str = Header(default=""),
+    credential: HTTPAuthorizationCredentials | None = Security(_bearer_scheme),
+) -> dict:
     """Authenticate operator from a configured bearer identity or local operator token.
 
     Audit identity is derived from the credential; never from the request JSON.
     The legacy operator token represents the configured local operator identity.
     """
-    if authorization:
-        identity = resolve_identity(authorization=authorization)
+    if credential is not None:
+        identity = resolve_identity(authorization=f"Bearer {credential.credentials}")
         if identity["role"] != "operator":
             raise HTTPException(status_code=403, detail="Papel de operador obrigatório.")
         return identity
-    if get_settings().operator_token and operator_token_is_valid(x_operator_token):
+    if get_settings().auth_mode == "local" and get_settings().operator_token and operator_token_is_valid(x_operator_token):
         return {"user_id": "local-operator", "role": "operator"}
     raise HTTPException(status_code=403, detail="Acesso de operador negado.")
 
@@ -79,9 +99,31 @@ def health():
     return {"status": "ok"}
 
 
+@router.get("/ready")
+def readiness():
+    from app.core.readiness import check_readiness
+    if not check_readiness(get_settings()):
+        raise HTTPException(status_code=503, detail="Persistência indisponível.")
+    return {"status": "ready", "scope": (
+        "central_state_only" if getattr(get_settings(), "state_backend", "sqlite") == "postgres"
+        else "local_state_only")}
+
+
 @router.get("/metrics", dependencies=[Depends(require_operator)])
 def current_metrics():
     return telemetry_store().stats()
+
+
+@router.get("/ops/slo", dependencies=[Depends(require_operator)])
+def service_level_objectives(window_minutes: int = Query(default=60, ge=5, le=1440)):
+    from app.core.observability import evaluate_slo
+    return evaluate_slo(telemetry_store().recent_stats(window_minutes=window_minutes))
+
+
+@router.get("/ops/alerts", dependencies=[Depends(require_operator)])
+def operational_alerts(window_minutes: int = Query(default=60, ge=5, le=1440)):
+    from app.core.observability import evaluate_operational_gates
+    return evaluate_operational_gates(telemetry_store().recent_stats(window_minutes=window_minutes))
 
 
 @router.get("/traces/{request_id}", dependencies=[Depends(require_operator)])
@@ -91,7 +133,7 @@ def request_traces(request_id: str):
 
 
 @router.post("/feedback")
-def submit_feedback(payload: FeedbackRequest, subject: dict = Depends(resolve_identity)):
+def submit_feedback(payload: FeedbackRequest, subject: dict = Depends(authenticated_identity)):
     if subject["role"] != "customer":
         raise HTTPException(status_code=403, detail="Apenas clientes podem avaliar.")
     if not telemetry_store().rate(payload.request_id, user_ref(subject["user_id"]), payload.rating):
@@ -107,7 +149,7 @@ def conversation_history(conversation_id: str,
 
 
 @router.get("/my-handoffs/{conversation_id}")
-def my_handoffs(conversation_id: str, subject: dict = Depends(resolve_identity)):
+def my_handoffs(conversation_id: str, subject: dict = Depends(authenticated_identity)):
     if subject["role"] != "customer":
         raise HTTPException(status_code=403, detail="Apenas clientes podem consultar tickets.")
     return {"items": handoff_store().user_cases(conversation_id, subject["user_id"])}
@@ -133,11 +175,20 @@ async def resolve_handoff(handoff_id: str, payload: HandoffResolveRequest,
     ticket = handoff_store().get(handoff_id)
     if ticket is None:
         raise HTTPException(status_code=404, detail="Handoff não encontrado.")
-    key = (str(memory_store().path.resolve()), ticket["user_id"], ticket["conversation_id"])
+    settings = get_settings()
+    if getattr(settings, "state_backend", "sqlite") == "postgres":
+        guard = postgres_conversation_lock(settings.state_database_url, ticket["user_id"],
+                                           ticket["conversation_id"],
+                                           timeout=settings.total_request_timeout_seconds)
+    else:
+        key = (str(memory_store().path.resolve()), ticket["user_id"], ticket["conversation_id"])
+        guard = conversation_lock(key, timeout=getattr(settings, "total_request_timeout_seconds", 90))
     try:
-        async with conversation_lock(key, timeout=getattr(get_settings(), "total_request_timeout_seconds", 90)):
+        async with guard:
             return _resolve_handoff(handoff_id, payload, operator)
-    except TimeoutError as exc:
+    except HTTPException:
+        raise
+    except Exception as exc:
         log.error("handoff_resolution_failed", error_type=type(exc).__name__)
         raise HTTPException(status_code=503, detail="Não foi possível persistir a resposta humana.") from exc
 
@@ -145,7 +196,12 @@ async def resolve_handoff(handoff_id: str, payload: HandoffResolveRequest,
 def _resolve_handoff(handoff_id, payload, operator):
     # All state shares one database by default. Atomic write means a resolved
     # ticket and the human reply cannot diverge on process interruption.
-    same_database = memory_store().path.resolve() == handoff_store().path.resolve()
+    memory, handoffs = memory_store(), handoff_store()
+    if getattr(get_settings(), "state_backend", "sqlite") == "postgres":
+        same_database = (getattr(memory, "dsn", None) == get_settings().state_database_url
+                         and getattr(handoffs, "dsn", None) == get_settings().state_database_url)
+    else:
+        same_database = memory.path.resolve() == handoffs.path.resolve()
     if not same_database:
         # A completed ticket without an atomic human reply would break resume.
         # The service is configured for ONE local state database; fail closed.
@@ -170,20 +226,39 @@ def _resolve_handoff(handoff_id, payload, operator):
 
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(payload: ChatRequest, subject: dict = Depends(resolve_identity)):
+async def chat(payload: ChatRequest, subject: dict = Depends(authenticated_identity)):
     assert_customer(subject, payload.user_id)
     started = perf_counter()
     request_id = str(uuid4())
     total_timeout = getattr(get_settings(), "total_request_timeout_seconds", 90)
     payload = payload.model_copy(update={"conversation_id": payload.conversation_id or str(uuid4())})
-    path = _memory.path if _memory is not None else Path(get_settings().state_db_path)
-    key = (str(path.resolve()), subject["user_id"], payload.conversation_id)
+    settings = get_settings()
+    if getattr(settings, "state_backend", "sqlite") == "postgres":
+        guard = postgres_conversation_lock(settings.state_database_url, subject["user_id"],
+                                           payload.conversation_id, timeout=total_timeout)
+    else:
+        path = _memory.path if _memory is not None else Path(settings.state_db_path)
+        key = (str(path.resolve()), subject["user_id"], payload.conversation_id)
+        guard = conversation_lock(key, timeout=total_timeout)
     try:
-        async with conversation_lock(key, timeout=total_timeout):
+        async with guard:
             return await _chat(payload, subject, started, request_id, total_timeout)
+    except UpstreamUnavailable as exc:
+        _record_failure(request_id, subject["user_id"], payload.conversation_id, started, exc)
+        raise HTTPException(status_code=503,
+                            detail="Serviço de IA temporariamente indisponível. Tente novamente mais tarde.",
+                            headers={"X-Request-ID": request_id}) from exc
     except TimeoutError as exc:
         _record_failure(request_id, subject["user_id"], payload.conversation_id, started, exc)
         raise HTTPException(status_code=503, detail="Não foi possível processar a solicitação.",
+                            headers={"X-Request-ID": request_id}) from exc
+    except HTTPException:
+        raise
+    except Exception as exc:
+        # Connection failures during advisory-lock acquisition happen before
+        # _chat's error boundary. Classify them as unavailable persistence.
+        _record_failure(request_id, subject["user_id"], payload.conversation_id, started, exc)
+        raise HTTPException(status_code=503, detail="Persistência temporariamente indisponível.",
                             headers={"X-Request-ID": request_id}) from exc
 
 
@@ -209,9 +284,12 @@ async def _chat(payload, subject, started, request_id, total_timeout):
     session_ref = user_ref(uid + ":" + conversation_id)
     bind_contextvars(request_id=request_id, session_ref=session_ref, user_ref=user_ref(uid))
     try:
+        # Configured retention is enforced before reading any conversation.
+        if get_settings().memory_retention_days:
+            memory_store().purge_expired()
         # Memory is required for correct multi-turn semantics: fail closed if
         # persistence is unavailable instead of silently omitting earlier turns.
-        history = memory_store().get_history(conversation_id, uid)
+        history = memory_store().get_history(conversation_id, uid, current_message=payload.message)
         pending = handoff_store().pending(conversation_id, uid)
         pending_guard = None
         if pending:
@@ -274,7 +352,9 @@ async def _chat(payload, subject, started, request_id, total_timeout):
         log.info("chat_request_completed", agent=response.agent,
                  agents_used=response.agents_used, latency_ms=round(latency_ms,2))
         return response
-    except HTTPException:
+    except (HTTPException, UpstreamUnavailable):
+        # Let the outer /chat handler classify upstream outages, record the
+        # incident once, and return the appropriate non-sensitive 503 message.
         raise
     except Exception as exc:
         _record_failure(request_id, uid, conversation_id, started, exc)

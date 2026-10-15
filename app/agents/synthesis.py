@@ -92,6 +92,13 @@ class SynthesisAgent:
                     raise ValueError("invalid synthesis provider response")
                 answer = content.strip()
                 usage = read_usage(response)
+                # Synthesis is another generation step: specialist grounding
+                # must not be lost when the model rewrites their answers.
+                from app.rag.verification import verify_claims
+                verified, _ = verify_claims(answer,
+                    [str(r.get("answer") or "") for r in agent_results], sources)
+                if not verified:
+                    raise ValueError("unsupported synthesis claim")
             except Exception as exc:
                 answer = ""
                 errors.append("synthesis_llm:" + type(exc).__name__)

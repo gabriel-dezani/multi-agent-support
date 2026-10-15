@@ -1,0 +1,34 @@
+# Optional LOCAL central-state experiment. This is NOT a multi-replica vector deployment.
+# Set STATE_POSTGRES_PASSWORD to a local-only password, then:
+# docker compose -f docker-compose.yml -f docker-compose.postgres.yml up --build
+services:
+  api:
+    restart: unless-stopped
+    init: true
+    build:
+      context: .
+      args:
+        INSTALL_POSTGRES_DEPS: "true"
+    environment:
+      STATE_BACKEND: postgres
+      STATE_DATABASE_URL: postgresql://app:${STATE_POSTGRES_PASSWORD:?Set STATE_POSTGRES_PASSWORD in .env}@postgres:5432/support
+      REPLICAS: "1"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: support
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${STATE_POSTGRES_PASSWORD:?Set STATE_POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_state:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d support"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+volumes:
+  postgres_state:

@@ -1,0 +1,3 @@
+# Optional centralized state (SQLite mode does not require this package).
+-r requirements.txt
+psycopg[binary]>=3.2,<4

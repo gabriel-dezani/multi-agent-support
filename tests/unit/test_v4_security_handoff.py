@@ -16,7 +16,7 @@ from app.orchestration.review_policy import choose_next, prepare_review
 
 
 def _settings():
-    return SimpleNamespace(api_credentials_json=json.dumps({
+    return SimpleNamespace(auth_mode="local", api_credentials_json=json.dumps({
         'alice-demo-token': {'user_id': 'alice', 'role': 'customer'},
         'bob-demo-token': {'user_id': 'bob', 'role': 'customer'},
         'operator-demo-token': {'user_id': 'operator', 'role': 'operator'}
@@ -44,7 +44,7 @@ def test_credentials_fail_closed(monkeypatch, authorization, expected):
 
 
 def test_empty_identity_config_refuses_all(monkeypatch):
-    monkeypatch.setattr(auth,'get_settings',lambda: SimpleNamespace(api_credentials_json='{}'))
+    monkeypatch.setattr(auth,'get_settings',lambda: SimpleNamespace(auth_mode='local', api_credentials_json='{}'))
     with pytest.raises(HTTPException) as exc:
         auth.resolve_identity('Bearer alice-demo-token')
     assert exc.value.status_code == 503

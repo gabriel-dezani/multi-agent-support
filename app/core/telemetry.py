@@ -27,6 +27,7 @@ class TelemetryRepository:
                 request_id TEXT NOT NULL, user_ref TEXT NOT NULL, rating INTEGER NOT NULL,
                 created_at TEXT DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY(request_id,user_ref))""")
+            db.execute("CREATE INDEX IF NOT EXISTS idx_request_stats_created_at ON request_stats(created_at)")
             columns = {row[1] for row in db.execute("PRAGMA table_info(request_stats)")}
             for name, definition in {
                 "session_ref": "TEXT", "plan_json": "TEXT", "routing_strategy": "TEXT",
@@ -53,7 +54,7 @@ class TelemetryRepository:
         safe = {}
         if not isinstance(details, dict):
             return safe
-        for key in ("results_reviewed", "input_tokens", "output_tokens", "hits", "max_score", "mean_score", "hnsw_recovered"):
+        for key in ("results_reviewed", "input_tokens", "output_tokens", "hits", "max_score", "mean_score", "hnsw_recovered", "retrieval_ms", "dense_candidates", "lexical_candidates", "lexical_admitted", "lexical_only_admitted", "hybrid_used", "verification_failed"):
             value = details.get(key)
             if isinstance(value, (int, float)) and math.isfinite(value):
                 safe[key] = value
@@ -104,6 +105,13 @@ class TelemetryRepository:
                  json.dumps(self.safe_details(x.get("details"))))
                 for index,x in enumerate(spans)
             ])
+        # Export only post-commit and never let exporter issues affect the API.
+        from app.core.observability import export_structured_trace
+        export_structured_trace(request_id, spans, {
+            "route": route or "unknown", "latency_ms": latency_ms,
+            "status_code": status_code, "escalated": bool(escalated),
+            "degraded": bool(degraded), "agents_count": len(agents or []),
+        })
 
     def trace(self, request_id):
         with self.connect() as db:
@@ -128,6 +136,48 @@ class TelemetryRepository:
                 return False
             db.execute("INSERT INTO user_feedback(request_id,user_ref,rating) VALUES(?,?,?) ON CONFLICT(request_id,user_ref) DO UPDATE SET rating=excluded.rating",(request_id,user_ref,rating))
         return True
+
+    def recent_stats(self, *, window_minutes: int = 60, now=None) -> dict:
+        """UTC rolling-window operational counters; never exposes user identifiers.
+
+        The old ``stats`` endpoint reports lifetime averages, which can hide a
+        recent provider incident. Keep it for compatibility; this endpoint
+        supplies alerting/SLO denominators from the same bounded window.
+        """
+        from datetime import timezone, timedelta
+
+        if isinstance(window_minutes, bool) or not isinstance(window_minutes, int) or not 5 <= window_minutes <= 1440:
+            raise ValueError("window_minutes must be an integer between 5 and 1440")
+        if now is None:
+            now = datetime.now(timezone.utc)
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise ValueError("now must be timezone-aware")
+        now = now.astimezone(timezone.utc)
+        start = (now - timedelta(minutes=window_minutes)).strftime("%Y-%m-%d %H:%M:%S")
+        end = now.strftime("%Y-%m-%d %H:%M:%S")
+        with self.connect() as db:
+            row = db.execute("""SELECT COUNT(*),
+                COALESCE(SUM(CASE WHEN status_code >= 400 THEN 1 ELSE 0 END),0),
+                COALESCE(SUM(degraded),0), COALESCE(SUM(escalated),0),
+                COALESCE(SUM(CASE WHEN routing_strategy='deterministic_fallback_after_error' THEN 1 ELSE 0 END),0),
+                COALESCE(SUM(CASE WHEN usage_complete=1 THEN 1 ELSE 0 END),0),
+                COALESCE(SUM(CASE WHEN usage_complete IS NOT NULL THEN 1 ELSE 0 END),0)
+                FROM request_stats WHERE created_at >= ? AND created_at <= ?""", (start,end)).fetchone()
+            latency = [r[0] for r in db.execute(
+                "SELECT latency_ms FROM request_stats WHERE created_at >= ? AND created_at <= ? "
+                "ORDER BY latency_ms", (start,end)) if isinstance(r[0], (int,float))]
+        requests, errors, degraded, handoffs, fallback_errors, complete, evaluated = row
+        p95 = round(latency[round((len(latency)-1)*.95)], 2) if latency else None
+        return {"window_minutes": window_minutes, "requests": requests, "errors": errors,
+                "degraded": degraded, "human_escalations": handoffs,
+                "routing_fallback_errors": fallback_errors,
+                "usage_complete_requests": complete, "usage_evaluated_requests": evaluated,
+                "error_rate": errors / requests if requests else None,
+                "latency_p95_ms": p95,
+                "degraded_rate": degraded / requests if requests else None,
+                "handoff_rate": handoffs / requests if requests else None,
+                "routing_fallback_error_rate": fallback_errors / requests if requests else None,
+                "usage_completeness_rate": complete / evaluated if evaluated else None}
 
     def stats(self):
         with self.connect() as db:

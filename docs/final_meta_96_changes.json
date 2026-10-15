@@ -1,0 +1,81 @@
+{
+  "backup": "C:\\Users\\Nitro\\AppData\\Local\\Temp\\multi-agent-pre-final-08f90a61a3bc4abca13b356d31faf521",
+  "files": {
+    "docker-compose.postgres.yml": {
+      "before_sha256": "33557ceb79ae9f8de1036d552d3669da66043a4bdf9477e4bb81518b6930bc38",
+      "after_sha256": "4c96401680428743f49ad980701f39f4eac9c3e4b77fb91af9ee8f7c34d9a33a"
+    },
+    "scripts/postgres_state_smoke.py": {
+      "before_sha256": "5dd2cbd28ab419f4f70c98f1a3dc4579da38561bc15a0ac36c4f89c358f8b497",
+      "after_sha256": "ee2022a5af8f27c697d60b4893a94b13ad9333c971772c20be98a83eedf96c0f"
+    },
+    ".github/workflows/ci.yml": {
+      "before_sha256": "fc5eb4eefa0f2f50d45bdb56a7d617dccb65f0e7cb63b8e4015981b8d3e4d959",
+      "after_sha256": "4313a47cccb8e98547272e96d19e9f81f05ac51c10dc675b32efc85380923665"
+    },
+    "app/core/distributed_lock.py": {
+      "before_sha256": "384b74599b3fb24e5894aa50869a824040e9a7e44769180115367d96d650e7ce",
+      "after_sha256": "c730bacf0f88fd486dc395890e2985110a1e455b7cf37813cfcb4c6be2a45c79"
+    },
+    "app/core/postgres_state.py": {
+      "before_sha256": "8a104c89f20c2f81d09b5dcf621ed0b49198d25dd2efbcf58d24016844149c69",
+      "after_sha256": "cfdad9f3a7ed38098af0b60383c22e4e3a2d2941cf35c20b238ca9314e06fc24"
+    },
+    "app/core/readiness.py": {
+      "before_sha256": "7612fc0b7fc68bd8fda27e267bf2221802d2c19c52bbb76defa76dff4ff95503",
+      "after_sha256": "aa89dfbde08c74c50b8dfaece9c959313a8d3382f1f1447a342a80cc3c552ff1"
+    },
+    "app/core/telemetry.py": {
+      "before_sha256": "735228183010b5a8a299ee972f61e5045cd946408d1c00d4566c83d3403e74d3",
+      "after_sha256": "684b137783fb34cf54c9c3ec8f66d006c1581af8d636fbe6028f3e1914df364c"
+    },
+    "app/evaluation/retrieval.py": {
+      "before_sha256": "096be584b898cd15c5c636d20e9d5d4eb448bc664e7684a1a556e3e3c55b6843",
+      "after_sha256": "94b7c0181f2b4effe70009fd5724a4461457300a286351f3b91d06f8b3887748"
+    },
+    "app/memory/store.py": {
+      "before_sha256": "f3e6728213ec1fafd7eeb7c335742de12b8b73243e248dab5d6d8d438a8254b8",
+      "after_sha256": "b2c6e7a029dc84101f831c34fe203017869ac69404b5b630450b8cf9d7107d79"
+    },
+    "app/orchestration/context.py": {
+      "before_sha256": "7ffa17a216d5c851e173c968d78c832077b2a4dfdc3aa543957656bf7f211f35",
+      "after_sha256": "06e589af08d0051b928215d8597b01efbc555f5d14916fb61fb435adfb4bc913"
+    },
+    "app/orchestration/graph.py": {
+      "before_sha256": "e00455089a6e66b31303fec4cd6b84a46ed1172247219e827ba56fa80b11df30",
+      "after_sha256": "7c11674f4b396f1992cb15ec537d5e658db3cc230910f774354fee465e92518f"
+    },
+    "app/orchestration/review_policy.py": {
+      "before_sha256": "38f0fc84985a60e1119207c72f92209ad99473bcb32c6f0c1ffd46aaefee13fc",
+      "after_sha256": "1ca6893370a1edd6c6a6c07c82a5ccca560c77af6e446625607428b08ebc67b8"
+    },
+    "app/rag/ranking.py": {
+      "before_sha256": "071fa2bb2a565e12d524effaf27f239e894b6234fcf66e94cea4f042ff7d728e",
+      "after_sha256": "bea21b3328277d0a4d67154fb4e75a08b7a8904b1e0b5486db4042f1c8f6131b"
+    },
+    "app/rag/retriever.py": {
+      "before_sha256": "e07bea0110ed7f25d957746dd949c222b76421ffc98c338d899bf6bebe216d10",
+      "after_sha256": "219e0abe580f893e218bd9c9b88336ceff01fb61174c3933b291cf022da58f7c"
+    },
+    "app/rag/lexical.py": {
+      "before_sha256": null,
+      "after_sha256": "d43c3b53dcb7282c5b849d8cce0b5e9ae2376884c885b752c31adf16453c824b"
+    },
+    "app/memory/topics.py": {
+      "before_sha256": null,
+      "after_sha256": "06ca56373070ca4190df5231c18c0a53ea28f8b35ed8fff383cf9dafbc4de163"
+    },
+    "scripts/offline_final_pillars.py": {
+      "before_sha256": null,
+      "after_sha256": "a2ebbaed4d4791a534c10b36987eff19d2308f5b99e0e105f766180c6cfc4d60"
+    },
+    "tests/unit/test_final_pillars.py": {
+      "before_sha256": null,
+      "after_sha256": "0ca1cc4a3bc1918ff0875d57322cf45b33a8c39b0f3c790a901c8e01a62712b3"
+    },
+    ".coveragerc.postgres": {
+      "before_sha256": null,
+      "after_sha256": "e386ce41f194cd284ba08f2babcbf83c4712939270ea605b6d5a1da914f6bd85"
+    }
+  }
+}

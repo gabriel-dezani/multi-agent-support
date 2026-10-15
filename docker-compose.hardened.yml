@@ -1,0 +1,27 @@
+# Optional hardened single-instance overlay:
+# docker compose -f docker-compose.yml -f docker-compose.hardened.yml up -d --build
+# This DOES NOT provide multi-replica safety; session locks are process-local.
+services:
+  api:
+    build:
+      context: .
+      args:
+        INSTALL_PRODUCTION_DEPS: "true"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,nosuid,noexec,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    mem_limit: 1536m
+    cpus: 2
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

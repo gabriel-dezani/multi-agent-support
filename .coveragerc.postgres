@@ -1,0 +1,10 @@
+[run]
+source =
+    app.core.postgres_state
+    app.core.distributed_lock
+data_file = .coverage.postgres
+concurrency = multiprocessing
+parallel = true
+
+[report]
+show_missing = True

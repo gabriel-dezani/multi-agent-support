@@ -1,0 +1,31 @@
+MULTI-AGENT SUPPORT — V8.3, REVISAO FOCADA EM 3 PILARES
+
+1. FACA BACKUP da pasta V8.2.1 antes de substitui-la.
+2. Extraia este ZIP em C:\Users\Nitro\Downloads\Projetos.
+3. Abra a pasta multi-agent-support no PyCharm.
+4. Configure Python 3.12 e .venv, se necessario.
+5. No terminal do PyCharm execute:
+
+   python -m pip install -r requirements.txt
+   python -m scripts.offline_quality_scorecard
+   python -m scripts.offline_supervisor_scorecard
+   python -m scripts.offline_long_turn_scorecard
+   python -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=90
+
+ESTAS VALIDACOES NAO PRECISAM DE OPENAI_API_KEY NEM CREDITOS DE API.
+Nao execute compare_retrieval.py com embeddings OpenAI sem querer consumir creditos.
+
+Mudancas principais:
+- Avaliacao A/B do RAG com exigencia de dataset humano revisado, inclusive
+  metricas por categoria e recusa de estrategias que nao recuperam nada.
+- Estado central PostgreSQL opcional, lock distribuido por conversa e smoke
+  com PostgreSQL real em job de CI.
+- Memoria multi-turn orientada a pergunta atual, protegendo troca de assunto;
+  scorecard com 140 turnos por sessao e isolamento entre usuarios.
+
+LIMITACOES: Postgres real ainda depende do job de CI; REPLICAS>1 continua
+bloqueado ate que a camada vetorial compartilhada seja implementada.
+A versao completa da nova suite deve ser executada no Windows.
+A nota >=9.6 nao e garantida; exige reavaliacao externa.
+
+RELATORIO: docs/REVISAO_FOCADA_TRES_PILARES_V8_3.md

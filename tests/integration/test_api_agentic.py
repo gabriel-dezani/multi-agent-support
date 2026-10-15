@@ -71,7 +71,7 @@ def _configure_state(monkeypatch, tmp_path, graph):
 
 
 def _configure_operator(monkeypatch, token="operator-secret"):
-    settings = SimpleNamespace(operator_token=token)
+    settings = SimpleNamespace(auth_mode="local", operator_token=token)
     monkeypatch.setattr(routes, "get_settings", lambda: settings)
     monkeypatch.setattr(security, "get_settings", lambda: settings)
 

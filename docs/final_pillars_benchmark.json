@@ -1,0 +1,916 @@
+{
+  "external_api_calls": 0,
+  "human_reviewed": false,
+  "retrieval": {
+    "human_reviewed": false,
+    "scope": "developer_synthetic",
+    "k": 1,
+    "modes": {
+      "previous_rerank": {
+        "evaluated": 12,
+        "unlabeled": 0,
+        "scores": {
+          "recall_at_k": 0.6667,
+          "precision_at_k": 0.6667,
+          "hit_at_k": 0.6667,
+          "mrr": 0.6667,
+          "ndcg_at_k": 0.6667
+        },
+        "cases": [
+          {
+            "id": "case-0",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-1",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-2",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-3",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-4",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-5",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-6",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-7",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-8",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-9",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-10",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-11",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        ]
+      },
+      "dense": {
+        "evaluated": 12,
+        "unlabeled": 0,
+        "scores": {
+          "recall_at_k": 0.6667,
+          "precision_at_k": 0.6667,
+          "hit_at_k": 0.6667,
+          "mrr": 0.6667,
+          "ndcg_at_k": 0.6667
+        },
+        "cases": [
+          {
+            "id": "case-0",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-1",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-2",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-3",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-4",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-5",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-6",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-7",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-8",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-9",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-10",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-11",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        ]
+      },
+      "lexical": {
+        "evaluated": 12,
+        "unlabeled": 0,
+        "scores": {
+          "recall_at_k": 0.6667,
+          "precision_at_k": 0.6667,
+          "hit_at_k": 0.6667,
+          "mrr": 0.6667,
+          "ndcg_at_k": 0.6667
+        },
+        "cases": [
+          {
+            "id": "case-0",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-1",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-2",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-3",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-4",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-5",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-6",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-7",
+            "status": "ok",
+            "recall_at_k": 0.0,
+            "precision_at_k": 0.0,
+            "hit_at_k": 0.0,
+            "mrr": 0.0,
+            "ndcg_at_k": 0.0
+          },
+          {
+            "id": "case-8",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-9",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-10",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-11",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        ]
+      },
+      "hybrid": {
+        "evaluated": 12,
+        "unlabeled": 0,
+        "scores": {
+          "recall_at_k": 1.0,
+          "precision_at_k": 1.0,
+          "hit_at_k": 1.0,
+          "mrr": 1.0,
+          "ndcg_at_k": 1.0
+        },
+        "cases": [
+          {
+            "id": "case-0",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-1",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-2",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-3",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-4",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-5",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-6",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-7",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-8",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-9",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-10",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          {
+            "id": "case-11",
+            "status": "ok",
+            "recall_at_k": 1.0,
+            "precision_at_k": 1.0,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        ]
+      }
+    },
+    "at_k4_default_candidate_budget": {
+      "human_reviewed": false,
+      "scope": "developer_synthetic",
+      "k": 4,
+      "modes": {
+        "dense": {
+          "evaluated": 12,
+          "unlabeled": 0,
+          "scores": {
+            "recall_at_k": 0.6667,
+            "precision_at_k": 0.1667,
+            "hit_at_k": 0.6667,
+            "mrr": 0.6667,
+            "ndcg_at_k": 0.6667
+          },
+          "cases": [
+            {
+              "id": "case-0",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-1",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-2",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-3",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-4",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-5",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-6",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-7",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-8",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-9",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-10",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-11",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            }
+          ]
+        },
+        "lexical": {
+          "evaluated": 12,
+          "unlabeled": 0,
+          "scores": {
+            "recall_at_k": 0.6667,
+            "precision_at_k": 0.1667,
+            "hit_at_k": 0.6667,
+            "mrr": 0.6667,
+            "ndcg_at_k": 0.6667
+          },
+          "cases": [
+            {
+              "id": "case-0",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-1",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-2",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-3",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-4",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-5",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-6",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-7",
+              "status": "ok",
+              "recall_at_k": 0.0,
+              "precision_at_k": 0.0,
+              "hit_at_k": 0.0,
+              "mrr": 0.0,
+              "ndcg_at_k": 0.0
+            },
+            {
+              "id": "case-8",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-9",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-10",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-11",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            }
+          ]
+        },
+        "hybrid": {
+          "evaluated": 12,
+          "unlabeled": 0,
+          "scores": {
+            "recall_at_k": 1.0,
+            "precision_at_k": 0.25,
+            "hit_at_k": 1.0,
+            "mrr": 1.0,
+            "ndcg_at_k": 1.0
+          },
+          "cases": [
+            {
+              "id": "case-0",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-1",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-2",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-3",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-4",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-5",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-6",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-7",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-8",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-9",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-10",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            },
+            {
+              "id": "case-11",
+              "status": "ok",
+              "recall_at_k": 1.0,
+              "precision_at_k": 0.25,
+              "hit_at_k": 1.0,
+              "mrr": 1.0,
+              "ndcg_at_k": 1.0
+            }
+          ]
+        }
+      }
+    },
+    "dataset_sha256": "c1ea64f171cdc261e0718a685319cddac991cdc86f2ef8a0472408abe281e51b",
+    "categories": {
+      "ann_miss": 4,
+      "paraphrase": 4,
+      "agreement": 4
+    },
+    "limitation": "Controlled fixed embeddings demonstrate candidate recall, not general semantic accuracy; lexical-only candidates still require exact semantic relevance >=0.45"
+  },
+  "memory": [
+    {
+      "followup_turns": 250,
+      "total_turns": 251,
+      "before_anchor_recovered": false,
+      "after_anchor_recovered": true,
+      "named_old_topic_recovered": true,
+      "resumed_topic_persisted": true,
+      "window_messages": 12,
+      "isolation": true,
+      "restart": true,
+      "write_ms": 6014.71,
+      "read_median_ms": 3.332,
+      "topic_index_used": true
+    },
+    {
+      "followup_turns": 500,
+      "total_turns": 501,
+      "before_anchor_recovered": false,
+      "after_anchor_recovered": true,
+      "named_old_topic_recovered": true,
+      "resumed_topic_persisted": true,
+      "window_messages": 12,
+      "isolation": true,
+      "restart": true,
+      "write_ms": 11777.0,
+      "read_median_ms": 4.24,
+      "topic_index_used": true
+    },
+    {
+      "followup_turns": 1000,
+      "total_turns": 1001,
+      "before_anchor_recovered": false,
+      "after_anchor_recovered": true,
+      "named_old_topic_recovered": true,
+      "resumed_topic_persisted": true,
+      "window_messages": 12,
+      "isolation": true,
+      "restart": true,
+      "write_ms": 23587.36,
+      "read_median_ms": 6.049,
+      "topic_index_used": true
+    }
+  ]
+}

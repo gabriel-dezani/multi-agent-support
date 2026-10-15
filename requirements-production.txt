@@ -1,0 +1,4 @@
+# Optional OTLP exporter needed only if OTLP_ENDPOINT is set.
+opentelemetry-api>=1.28,<2
+opentelemetry-sdk>=1.28,<2
+opentelemetry-exporter-otlp-proto-http>=1.28,<2

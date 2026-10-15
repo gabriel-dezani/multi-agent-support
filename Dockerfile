@@ -1,8 +1,16 @@
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt requirements-production.txt requirements-postgres.txt ./
+ARG INSTALL_PRODUCTION_DEPS=false
+ARG INSTALL_POSTGRES_DEPS=false
+RUN python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt \
+    && if [ "$INSTALL_PRODUCTION_DEPS" = "true" ]; then \
+         python -m pip install --no-cache-dir --disable-pip-version-check -r requirements-production.txt; \
+       fi \
+    && if [ "$INSTALL_POSTGRES_DEPS" = "true" ]; then \
+         python -m pip install --no-cache-dir --disable-pip-version-check "psycopg[binary]>=3.2,<4"; \
+       fi
 COPY app ./app
 COPY data ./data
 COPY scripts ./scripts

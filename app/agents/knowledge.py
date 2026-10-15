@@ -4,7 +4,8 @@ from app.rag.ingestion import _valid_url
 from langchain_openai import ChatOpenAI
 
 from app.core.config import get_settings
-from app.core.usage import read_usage
+from app.core.usage import read_usage, add_usage
+from app.core.upstream import UpstreamUnavailable, classify_provider_error
 from app.orchestration.context import contextual_user_anchor
 from app.rag.retriever import KnowledgeRetriever
 
@@ -40,7 +41,7 @@ class KnowledgeAgent:
 
     @staticmethod
     def _handoff(answer, reason, *, sources=None, confidence=0.0, errors=None,
-                 retrieval=None, usage=None, usage_expected=False):
+                 retrieval=None, usage=None, usage_expected=False, usage_complete=None):
         result = {
             "answer": answer,
             "sources": sources or [],
@@ -55,6 +56,8 @@ class KnowledgeAgent:
             result["retrieval"] = retrieval
         if usage is not None:
             result["usage"] = usage
+        if usage_complete is not None:
+            result["usage_complete"] = usage_complete
         return result
 
     @staticmethod
@@ -76,6 +79,8 @@ class KnowledgeAgent:
         try:
             rows = self.retriever.retrieve(retrieval_query)
         except Exception as exc:
+            if classify_provider_error(exc):
+                raise UpstreamUnavailable("Knowledge provider unavailable") from exc
             return self._handoff(
                 "Não foi possível consultar a base da Getnet. A solicitação será encaminhada para atendimento humano.",
                 "Falha controlada no retrieval da base de conhecimento.",
@@ -150,6 +155,8 @@ class KnowledgeAgent:
             if not isinstance(parsed, GroundedKnowledgeResponse):
                 raise ValueError("LLM returned invalid groundedness contract")
         except Exception as exc:
+            if classify_provider_error(exc):
+                raise UpstreamUnavailable("Knowledge provider unavailable") from exc
             return self._handoff(
                 "Não foi possível verificar uma resposta fundamentada. Vou encaminhar ao atendimento humano.",
                 "Falha ou saída inválida no gerador fundamentado.",
@@ -177,12 +184,41 @@ class KnowledgeAgent:
                 usage=read_usage(raw), usage_expected=True,
             )
 
+        # Additional factuality gate independent of the generator's own
+        # supported=True declaration. Refuse unsupported numbers, guarantees
+        # and fabricated URLs. Optional second pass checks claim entailment.
+        from app.rag.verification import verify_claims, second_pass_verify
+        cited_evidence = [content for i, _, content in evidence if i in cited]
+        verified, reasons = verify_claims(answer, cited_evidence, cited_sources)
+        settings = get_settings()
+        verification_usage = {}
+        verification_complete = True
+        if settings.rag_verifier_mode not in {"heuristic", "llm"}:
+            verified = False
+            reasons.append("invalid_verification_policy")
+        elif verified and settings.rag_verifier_mode == "llm":
+            verified, verification_usage = second_pass_verify(llm=self.llm, question=message,
+                 answer=answer, evidence=cited_evidence,
+                 minimum_score=settings.rag_verifier_min_score, return_usage=True)
+            verification_complete = bool(verification_usage)
+            if not verified:
+                reasons.append("second_pass_grounding_failed")
+        if not verified:
+            retrieval["verification_failed"] = True
+            return self._handoff(
+                "Não foi possível confirmar todas as afirmações com as fontes da Getnet. Vou encaminhar ao atendimento humano.",
+                "Resposta rejeitada pela validação factual adicional.",
+                sources=cited_sources, confidence=0.0, retrieval=retrieval,
+                usage=add_usage(read_usage(raw), verification_usage), usage_expected=True,
+                usage_complete=verification_complete)
+
         return {
             "answer": answer,
             "sources": cited_sources,
             "confidence": confidence,
             "requires_human": False,
-            "usage": read_usage(raw),
+            "usage": add_usage(read_usage(raw), verification_usage),
             "usage_expected": True,
+            "usage_complete": verification_complete,
             "retrieval": retrieval,
         }

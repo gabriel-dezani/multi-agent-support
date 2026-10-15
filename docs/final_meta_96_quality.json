@@ -1,0 +1,22 @@
+{
+  "status": "pass",
+  "scope": "offline_synthetic_contracts_only",
+  "external_api_calls": 0,
+  "human_verified_semantic_accuracy": null,
+  "dataset_sha256": "5b1291a4139724dee1d228ae3e1d9f6adb36dffb6f942a345b5bc6df33a494ea",
+  "factuality_contract": {
+    "cases": 24,
+    "supported": 10,
+    "unsupported": 14,
+    "false_accept": 0,
+    "false_reject": 0,
+    "failures": []
+  },
+  "routing_contract": {
+    "cases": 30,
+    "failures": []
+  },
+  "retrieval_contract": {
+    "mrr_invalid_leading_url": 0.5
+  }
+}

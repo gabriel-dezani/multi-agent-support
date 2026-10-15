@@ -37,7 +37,12 @@ def safe_public_subquery(message: str) -> str | None:
     if re.search(r'\b(dolar|dollar|usd)\b', text) and re.search(r'\b(cotacao|cambio|exchange rate|rate)\b', text):
         return 'current USD BRL exchange rate'
     if re.search(r'\b(weather|forecast|clima|previsao do tempo)\b', text):
-        return 'weather forecast Brazil today'
+        # Retain supported explicit public city and requested daypart, while
+        # rebuilding a canonical query that never copies private text.
+        match = re.search(r'\b(?:em|in|for)\s+(sao paulo|rio de janeiro|london|tokyo|paris|new york)\b', text)
+        city = match.group(1) if match else 'Brazil'
+        period = 'tomorrow' if re.search(r'\b(amanha|tomorrow)\b', text) else 'today'
+        return f'weather forecast {city} {period}'
     if re.search(r'\b(noticias|news|headlines)\b', text):
         return 'latest Brazil news'
     return None

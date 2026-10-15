@@ -1,0 +1,30 @@
+{
+  "python": "3.12.10",
+  "platform": "Windows",
+  "executables": {
+    "docker": null,
+    "psql": null,
+    "postgres": null
+  },
+  "psycopg_installed": false,
+  "postgres_real_executed": false,
+  "github_actions_executed": false,
+  "ci_yaml_parsed": true,
+  "ci_jobs": [
+    "test",
+    "docker",
+    "postgres-contract"
+  ],
+  "postgres_coverage": {
+    "source": [
+      "app.core.postgres_state",
+      "app.core.distributed_lock"
+    ],
+    "omit": [],
+    "data_file": ".coverage.postgres",
+    "concurrency": [
+      "multiprocessing"
+    ],
+    "parallel": true
+  }
+}
