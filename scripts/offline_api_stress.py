@@ -1,5 +1,6 @@
 """Concurrent HTTP stress of real FastAPI/SQLite, with simulated graph only."""
 from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing
 from pathlib import Path
 import json
 import logging
@@ -62,7 +63,7 @@ def main():
                            params={'user_id':'alice'}).json()['messages']
         assert sum(row['role']=='human' for row in history)==1
         assert len(history)<=get_settings().memory_max_messages
-        with sqlite3.connect(os.environ['STATE_DB_PATH']) as db:
+        with closing(sqlite3.connect(os.environ['STATE_DB_PATH'])) as db:
             counts=dict(db.execute("SELECT role,COUNT(*) FROM conversation_messages WHERE conversation_id='busy-alice-session' AND user_id='alice' GROUP BY role").fetchall())
         assert counts=={'user':60,'assistant':60,'human':1},counts
         assert client.post('/chat',headers=b,json={'message':'My sales',

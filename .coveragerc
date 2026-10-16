@@ -1,0 +1,11 @@
+[run]
+# Offline SQLite suite cannot exercise the optional PostgreSQL service safely.
+# These modules are covered by the separate PostgreSQL contract job in CI.
+# Omitting them from this LOCAL coverage denominator is explicit, not proof
+# that the optional backend has 90% coverage.
+omit =
+    app/core/postgres_state.py
+    app/core/distributed_lock.py
+
+[report]
+show_missing = True

@@ -6,12 +6,36 @@ Credentials are demo-only; deploy behind TLS, secure vault and network controls.
 import hmac
 import json
 from datetime import datetime, timezone
-from fastapi import Header, HTTPException
+from fastapi import Header, HTTPException, Security
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from app.core.config import get_settings
 
 
+# OpenAPI / Swagger bearer scheme. The core verifier below also accepts plain
+# strings so it remains independently testable without an HTTP server.
+_bearer_scheme = HTTPBearer(auto_error=False, scheme_name="BearerAuth")
+
+
+def authenticated_identity(
+    credential: HTTPAuthorizationCredentials | None = Security(_bearer_scheme),
+) -> dict:
+    """Validate the bearer credential received from FastAPI security.
+
+    Swagger sends Authorization via the Authorize dialog rather than a generic
+    text parameter; the same fail-closed verification is used for API requests.
+    """
+    header = None if credential is None else f"Bearer {credential.credentials}"
+    return resolve_identity(header)
+
+
 def resolve_identity(authorization: str | None = Header(default=None)) -> dict:
-    raw = get_settings().api_credentials_json
+    settings = get_settings()
+    if settings.auth_mode == "oidc":
+        from app.core.oidc import verify_oidc_token
+        return verify_oidc_token(authorization, settings)
+    if settings.auth_mode != "local":
+        raise HTTPException(status_code=503, detail="Modo de autenticação inválido.")
+    raw = settings.api_credentials_json
     try:
         credentials = json.loads(raw)
         if not isinstance(credentials, dict):

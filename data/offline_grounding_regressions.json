@@ -1,0 +1,290 @@
+[
+  {
+    "id": "pos-01",
+    "answer": "Pix e QR Code são citados.",
+    "evidence": [
+      "Pix e QR Code são citados na documentação."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-02",
+    "answer": "A taxa informada é 1,20%.",
+    "evidence": [
+      "A taxa informada é 1,20%."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-03",
+    "answer": "O prazo informado é de 7 dias.",
+    "evidence": [
+      "O prazo informado é de 7 dias."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-04",
+    "answer": "O Pix está disponível.",
+    "evidence": [
+      "O Pix está disponível no aplicativo."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-05",
+    "answer": "O serviço é gratuito.",
+    "evidence": [
+      "O serviço é gratuito para esse plano."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-06",
+    "answer": "Não há limites especificados.",
+    "evidence": [
+      "Não há limites especificados nas regras."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-07",
+    "answer": "O recurso é ilimitado.",
+    "evidence": [
+      "O recurso é ilimitado no plano indicado."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-08",
+    "answer": "A resposta foi publicada em 2026.",
+    "evidence": [
+      "A resposta foi publicada em 2026."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-09",
+    "answer": "Atendimento sempre disponível.",
+    "evidence": [
+      "Atendimento sempre disponível nos canais suportados."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "pos-10",
+    "answer": "A garantia é oferecida.",
+    "evidence": [
+      "A garantia é oferecida nos termos descritos."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": true,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-01",
+    "answer": "A tarifa é de 1,50%.",
+    "evidence": [
+      "A tarifa é de 1,20%."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-02",
+    "answer": "O prazo é de 30 dias.",
+    "evidence": [
+      "O prazo é de 7 dias."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-03",
+    "answer": "A taxa é de 0,99%.",
+    "evidence": [
+      "A taxa é de 1,29%."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-04",
+    "answer": "O limite é de 1000.",
+    "evidence": [
+      "O limite é de 500."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-05",
+    "answer": "O serviço é gratuito.",
+    "evidence": [
+      "O serviço possui tarifa."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-06",
+    "answer": "O serviço é ilimitado.",
+    "evidence": [
+      "O serviço tem limites definidos."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-07",
+    "answer": "O pagamento é sempre garantido.",
+    "evidence": [
+      "O pagamento depende de aprovação."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-08",
+    "answer": "Não haverá bloqueio nunca.",
+    "evidence": [
+      "Bloqueio pode ocorrer conforme regras."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-09",
+    "answer": "O valor é infinito.",
+    "evidence": [
+      "O valor é limitado."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-10",
+    "answer": "Clique em https://pagamento-indevido.example/ agora.",
+    "evidence": [
+      "Consulte o link oficial."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-11",
+    "answer": "Veja https://evil.example/cartao",
+    "evidence": [
+      "Use a documentação interna."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-12",
+    "answer": "O prazo é 3 dias.",
+    "evidence": [
+      "O prazo é 5 dias."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-13",
+    "answer": "O valor é 1.000,00.",
+    "evidence": [
+      "O valor é 800,00."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  },
+  {
+    "id": "neg-14",
+    "answer": "Sempre haverá restituição.",
+    "evidence": [
+      "A restituição depende de análise."
+    ],
+    "sources": [
+      "https://site.getnet.com.br/ajuda/"
+    ],
+    "expected_supported": false,
+    "dataset_type": "synthetic-regression"
+  }
+]

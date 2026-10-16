@@ -216,13 +216,29 @@ def test_synthesis_exception_preserves_all_specialist_results(system, monkeypatc
     assert "SYNTHETIC_PRIVATE_MARKER" not in response.text
 
 
-def test_async_web_timeout_preserves_support_and_creates_ticket(system):
+def test_async_web_timeout_preserves_support_without_false_handoff(system):
     system.cfg.request_timeout_seconds = .02
     system.web_model.delay = .1
     response = chat(system, "Minhas vendas e cotação do dólar")
     assert response.status_code == 200
-    assert response.json()["requires_human"]
-    assert "123.45" in response.json()["answer"]
+    body = response.json()
+    assert not body["requires_human"]
+    assert body["handoff_id"] is None
+    assert "123.45" in body["answer"]
+    assert "consulta pública está temporariamente indisponível" in body["answer"]
+    assert system.handoffs.list() == []
+    assert system.runtime.runs[-1]["result"]["errors"] == ["web_search:provider_unavailable"]
+    assert len(system.memory.get_history("session", "alice")) == 2
+
+
+def test_web_only_timeout_returns_503_without_handoff_or_fake_answer(system):
+    system.cfg.request_timeout_seconds = .02
+    system.web_model.delay = .1
+    response = chat(system, "Qual é a cotação do dólar?", session="web-only-outage")
+    assert response.status_code == 503
+    assert "temporariamente indisponível" in response.json()["detail"]
+    assert system.handoffs.list() == []
+    assert system.memory.get_history("web-only-outage", "alice") == []
 
 
 def test_same_session_requests_observe_previous_committed_turn(system):

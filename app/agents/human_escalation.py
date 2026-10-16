@@ -5,7 +5,16 @@ class HumanEscalationAgent:
     """Creates a durable human-support case instead of only setting a flag."""
 
     def __init__(self, repository=None):
-        self.repository = repository or HandoffRepository()
+        if repository is not None:
+            self.repository = repository
+        else:
+            from app.core.config import get_settings
+            settings = get_settings()
+            if getattr(settings, "state_backend", "sqlite") == "postgres":
+                from app.core.postgres_state import PostgresHandoffRepository
+                self.repository = PostgresHandoffRepository(settings.state_database_url)
+            else:
+                self.repository = HandoffRepository()
 
     @staticmethod
     def _summary(message: str, history: list[dict] | None, agent_results: list[dict] | None) -> str:

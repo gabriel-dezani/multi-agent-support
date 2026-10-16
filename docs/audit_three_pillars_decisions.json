@@ -1,0 +1,56 @@
+{
+  "scope": "synthetic_developer_regressions_only",
+  "human_reviewed": false,
+  "external_api_calls": 0,
+  "supervisor": {
+    "cases": 6,
+    "before_correct": 2,
+    "after_correct": 6,
+    "details": [
+      {
+        "id": "web_search/empty_outage",
+        "expected": "human_escalation",
+        "before": "synthesis",
+        "after": "human_escalation"
+      },
+      {
+        "id": "web_search/weak_outage",
+        "expected": "human_escalation",
+        "before": "synthesis",
+        "after": "human_escalation"
+      },
+      {
+        "id": "web_search/valid",
+        "expected": "synthesis",
+        "before": "synthesis",
+        "after": "synthesis"
+      },
+      {
+        "id": "knowledge/empty_outage",
+        "expected": "human_escalation",
+        "before": "synthesis",
+        "after": "human_escalation"
+      },
+      {
+        "id": "knowledge/weak_outage",
+        "expected": "human_escalation",
+        "before": "synthesis",
+        "after": "human_escalation"
+      },
+      {
+        "id": "knowledge/valid",
+        "expected": "synthesis",
+        "before": "synthesis",
+        "after": "synthesis"
+      }
+    ]
+  },
+  "retrieval_metric_fixture": {
+    "recall_at_k": 1.0,
+    "precision_at_k": 0.3333,
+    "hit_at_k": 1.0,
+    "mrr": 0.5,
+    "ndcg_at_k": 0.6309
+  },
+  "limitation": "Frozen pre-audit recovery predicate; no claim of real-world accuracy or retrieval gain"
+}

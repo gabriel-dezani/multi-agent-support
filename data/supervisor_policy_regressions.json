@@ -1,0 +1,518 @@
+[
+  {
+    "id": "rag-failure-official-recovery",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "knowledge",
+        "web_search"
+      ],
+      "web_getnet_only": true
+    },
+    "expected_next": "web_search"
+  },
+  {
+    "id": "rag-failure-web-disabled",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": false,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-private-sales",
+    "message": "Minhas vendas Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-private-cpf",
+    "message": "Getnet Pix CPF 12345678909",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-private-mail",
+    "message": "Pix Getnet cliente@example.com",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-sensitive-number",
+    "message": "Pix Getnet 12345678909",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-mixed-private-plan",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge",
+      "customer_support"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "customer_support"
+  },
+  {
+    "id": "rag-failure-already-web",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge",
+      "web_search"
+    ],
+    "current_step": 2,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-budget-max1",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 1,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-budget-max2",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge",
+      "web_search"
+    ],
+    "current_step": 2,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 2,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-failure-other-brand",
+    "message": "Explique PayPal",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "rag-success-doesnt-add-agents",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": false,
+        "confidence": 0.9,
+        "sources": [
+          "https://site.getnet.com.br/pix/"
+        ],
+        "answer": "Evidências Getnet"
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "synthesis"
+  },
+  {
+    "id": "rag-low-confidence-replans",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": false,
+        "confidence": 0.2,
+        "sources": [
+          "https://site.getnet.com.br/pix/"
+        ],
+        "answer": "Evidências Getnet"
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "knowledge",
+        "web_search"
+      ],
+      "web_getnet_only": true
+    },
+    "expected_next": "web_search"
+  },
+  {
+    "id": "rag-uncited-result-replans",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "knowledge",
+        "requires_human": false,
+        "confidence": 0.9,
+        "sources": [],
+        "answer": "Evidências Getnet"
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "knowledge",
+        "web_search"
+      ],
+      "web_getnet_only": true
+    },
+    "expected_next": "web_search"
+  },
+  {
+    "id": "web-failure-recovers-local",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "web_search",
+        "knowledge"
+      ],
+      "rag_getnet_recovery": true
+    },
+    "expected_next": "knowledge"
+  },
+  {
+    "id": "web-failure-no-provider-key-local",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": false,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "web_search",
+        "knowledge"
+      ],
+      "rag_getnet_recovery": true
+    },
+    "expected_next": "knowledge"
+  },
+  {
+    "id": "web-failure-weather-no-rag-recovery",
+    "message": "weather forecast London today",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "web-failure-already-rag",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "knowledge",
+      "web_search"
+    ],
+    "current_step": 2,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "web-failure-private",
+    "message": "Getnet Pix minha conta",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": true,
+        "confidence": 0.1,
+        "sources": [],
+        "answer": ""
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "human_escalation"
+  },
+  {
+    "id": "web-success-stops",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": false,
+        "confidence": 0.9,
+        "sources": [
+          "https://site.getnet.com.br/pix/"
+        ],
+        "answer": "Evidências Getnet"
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {},
+    "expected_next": "synthesis"
+  },
+  {
+    "id": "web-low-confidence-recovers-rag",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": false,
+        "confidence": 0.2,
+        "sources": [
+          "https://site.getnet.com.br/pix/"
+        ],
+        "answer": "Evidências Getnet"
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "web_search",
+        "knowledge"
+      ],
+      "rag_getnet_recovery": true
+    },
+    "expected_next": "knowledge"
+  },
+  {
+    "id": "web-uncited-recovers-rag",
+    "message": "Explique Pix Getnet",
+    "plan": [
+      "web_search"
+    ],
+    "current_step": 1,
+    "agent_results": [
+      {
+        "agent": "web_search",
+        "requires_human": false,
+        "confidence": 0.9,
+        "sources": [],
+        "answer": "Evidências Getnet"
+      }
+    ],
+    "web_available": true,
+    "max_agents": 3,
+    "expected_replan": {
+      "plan": [
+        "web_search",
+        "knowledge"
+      ],
+      "rag_getnet_recovery": true
+    },
+    "expected_next": "knowledge"
+  }
+]

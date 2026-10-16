@@ -22,17 +22,44 @@ jobs:
         run: python -m compileall -q app scripts tests
       - name: Test with coverage (skipped modules are a CI failure)
         run: |
-          python -m pytest -q --cov=app --cov-report=term-missing -rA > pytest-results.txt
+          python -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=90 -rA > pytest-results.txt
           cat pytest-results.txt
           if grep -Eq '([1-9][0-9]* skipped|SKIPPED)' pytest-results.txt; then
             echo 'Unexpected skipped tests' >&2; exit 1
           fi
       - name: Feedback V6 regression quality gate
         run: python -m scripts.evaluate_feedback_v6
+      - name: Offline factuality and routing scorecard (no paid API)
+        run: python -m scripts.offline_quality_scorecard --output offline_quality_scorecard.json
+      - name: Upload offline quality evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: offline-quality-scorecard
+          path: offline_quality_scorecard.json
+          if-no-files-found: ignore
+      - name: Offline supervisor decision gates (22 policy cases, no API)
+        run: python -m scripts.offline_supervisor_scorecard --output supervisor_scorecard.json
+      - name: Upload supervisor evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: supervisor-scorecard
+          path: supervisor_scorecard.json
+          if-no-files-found: ignore
       - name: Routing evaluation (10 challenge examples)
         run: |
           python -m scripts.evaluate --mode router --output routing_ci.json
           python -c "import json; assert json.load(open('routing_ci.json'))['route_accuracy'] == 1.0"
+      - name: Long-turn session and supervisor regression (offline)
+        run: python -m scripts.offline_long_turn_scorecard --output long_turn_scorecard.json
+      - name: Upload long-turn regression evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: long-turn-regression
+          path: long_turn_scorecard.json
+          if-no-files-found: ignore
       - name: Multi-turn evaluation
         run: |
           python -m scripts.evaluate_multiturn --mode router --output multiturn_ci.json
@@ -47,11 +74,25 @@ jobs:
         run: python -m scripts.offline_rag_smoke
       - name: Parallel HTTP ticket stress
         run: python -m scripts.offline_api_stress
+      - name: Independent hybrid retrieval and 250/500/1000-turn memory benchmark
+        run: python -m scripts.offline_final_pillars
+      - name: Upload final pillar benchmark
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-pillar-benchmark
+          path: docs/final_pillars_benchmark.json
 
   docker:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate Compose overlays (no external API)
+        run: |
+          cp .env.example .env
+          docker compose -f docker-compose.yml -f docker-compose.observability.yml config --quiet
+          docker compose -f docker-compose.yml -f docker-compose.hardened.yml config --quiet
+          rm -f .env
       - name: Build image
         run: docker build -t multi-agent-support:ci .
       - name: Verify writable non-root Docker volumes
@@ -73,3 +114,68 @@ jobs:
           docker logs v6_ci_health
           docker rm -f v6_ci_health
           exit 1
+
+  postgres-contract:
+    runs-on: ubuntu-latest
+    # Includes dependency installation and a diagnostics/artifact reserve.
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci_test_only
+          POSTGRES_DB: multi_agent_ci
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U ci -d multi_agent_ci"
+          --health-interval 3s --health-timeout 3s --health-retries 20
+    env:
+      TEST_POSTGRES_DSN: postgresql://ci:ci_test_only@127.0.0.1:5432/multi_agent_ci
+      OPENAI_API_KEY: ''
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install central persistence dependencies (no model APIs)
+        run: python -m pip install -r requirements-postgres.txt
+      - name: Real PostgreSQL state, isolation, atomic handoff and advisory-lock smoke
+        id: postgres-smoke
+        shell: bash
+        run: |
+          set -o pipefail
+          # Stop before the job deadline so diagnostics and artifacts can run.
+          # TERM lets Python log stacks and coverage save data; KILL bounds cleanup.
+          time timeout --signal=TERM --kill-after=20s 15m \
+            python -u -m coverage run --rcfile=.coveragerc.postgres -m scripts.postgres_state_smoke \
+            2>&1 | tee postgres-smoke.log
+      - name: PostgreSQL diagnostics (no customer payloads)
+        if: always()
+        shell: bash
+        run: |
+          docker logs "${{ job.services.postgres.id }}" > postgres-service.log 2>&1
+          docker exec "${{ job.services.postgres.id }}" psql -U ci -d multi_agent_ci -c \
+            "SELECT pid, state, wait_event_type, wait_event, pg_blocking_pids(pid) AS blockers, clock_timestamp()-xact_start AS transaction_age FROM pg_stat_activity WHERE datname=current_database(); SELECT pid, locktype, mode, granted, classid, objid FROM pg_locks WHERE locktype='advisory';" \
+            > postgres-diagnostics.log 2>&1
+      - name: Generate separate PostgreSQL coverage (partial on failed smoke)
+        if: always()
+        shell: bash
+        run: |
+          python -m coverage combine --rcfile=.coveragerc.postgres
+          python -m coverage json --rcfile=.coveragerc.postgres -o postgres-coverage.json
+          python -m coverage report --rcfile=.coveragerc.postgres -m
+          python -c "import json; r=json.load(open('postgres-coverage.json')); assert any(p.endswith('postgres_state.py') for p in r['files']); assert any(p.endswith('distributed_lock.py') for p in r['files']); assert all(v['summary']['covered_lines'] > 0 for v in r['files'].values())"
+      - name: Upload PostgreSQL diagnostics and coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: postgres-contract-coverage
+          include-hidden-files: true
+          path: |
+            postgres-coverage.json
+            postgres-smoke.log
+            postgres-service.log
+            postgres-diagnostics.log
+            .coverage.postgres*
+          if-no-files-found: error

@@ -121,7 +121,8 @@ def main():
     # Bounded replanning: failed Getnet RAG -> official Getnet web source only.
     import app.orchestration.graph as graph_module
     original_settings = graph_module.get_settings
-    graph_module.get_settings = lambda: types.SimpleNamespace(tavily_api_key='simulated-key', request_timeout_seconds=15)
+    graph_module.get_settings = lambda: types.SimpleNamespace(
+        tavily_api_key='simulated-key', request_timeout_seconds=15, router_max_agents=3)
     class OfficialWeb:
         async def process(self,message,history=None,official_only=False):
             assert official_only, 'No broad general web fallback for Getnet RAG'

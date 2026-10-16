@@ -40,10 +40,15 @@ def is_contextual_followup(message: str) -> bool:
 
 def contextual_user_anchor(message: str, history: list[dict] | None) -> str:
     """Resolve consecutive ellipses to ONE anchor, never merge old topics."""
+    if (history and history[-1].get('topic_recalled') and
+            re.match(r'^(retome|retomar|volte|voltar|return|resume)\s', _normalize(message))):
+        return str(history[-1].get('context_anchor') or '')[:500]
     if not is_contextual_followup(message):
         return ''
     for row in reversed(history or []):
         if row.get('role') == 'user':
+            if row.get('resolved_topic'):
+                return str(row['resolved_topic'])[:500]
             content = str(row.get('content') or '')
             if not is_contextual_followup(content):
                 return content[:500]

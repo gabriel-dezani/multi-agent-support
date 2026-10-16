@@ -1,5 +1,8 @@
 # Multi-Agent Support System — Getnet Challenge
 
+> **V8 — incremento offline pós-feedback:** veja [`docs/EVOLUCAO_OFFLINE_SEM_CUSTOS_V8.md`](docs/EVOLUCAO_OFFLINE_SEM_CUSTOS_V8.md). O desenvolvimento desta rodada não requereu créditos de OpenAI ou Tavily. Testes estruturais gratuitos e a avaliação de fundamentação local são reproduzíveis com `python -m scripts.offline_quality_scorecard` e `python -m scripts.evaluate_grounding_local --dataset <dataset_revisado.json>`. A **nota 9,8 não foi obtida nem prometida**: o feedback 9,2 refere-se à versão anterior (V6), e a versão V8 ainda aguarda suíte integral de testes em Python 3.12, review de dados humanos e nova avaliação independente.
+
+
 Validação atual: consulte [`docs/RELATORIO_VALIDACAO_FINAL.md`](docs/RELATORIO_VALIDACAO_FINAL.md) e os artefatos associados. Os relatórios V6/release anteriores documentam etapas históricas; suas contagens de testes e integrações pendentes não representam necessariamente o estado atual. A validação distingue LangGraph, HTTP, SQLite e Chroma reais de LLMs, embeddings e dados de clientes simulados.
 
 O deadline total de uma conversa é configurável por `TOTAL_REQUEST_TIMEOUT_SECONDS` (90 segundos por padrão, incluindo espera pela sessão). `REQUEST_TIMEOUT_SECONDS` limita chamadas aos provedores. Solicitações da mesma sessão são serializadas dentro de um processo; múltiplos workers exigem coordenação distribuída. Credenciais de `API_CREDENTIALS_JSON` podem incluir `expires_at` ISO 8601 com fuso horário; tokens expirados são rejeitados.
@@ -182,4 +185,48 @@ O script consulta a API e recupera trechos do Chroma para um **juiz LLM estrutur
 
 No ambiente de revisão: **69 testes pytest passaram, 7 módulos foram ignorados** porque LangGraph/LangChain não estão instalados; avaliação original **10/10**, continuidade **5/5**, matriz adicional do feedback **16/16**, além de testes HTTP, concorrência e grafo emulado aprovados. Esses resultados são **offline**, não uma certificação E2E. A CI tem gate para reprovar skips e inclui testes com o LangGraph real quando as dependências estão disponíveis. A imagem Docker pré-cria diretórios persistentes graváveis pelo usuário non-root; a execução do Docker também deve ser validada fora deste ambiente.
 
-O projeto não foi publicado nem teve vídeo gravado, conforme solicitado. O enunciado oficial preservado em `docs/Desafio.md` contém uma exigência de vídeo; a decisão de não incluir vídeo faz parte do escopo desta entrega, não altera essa exigência original.
+No momento do relatório V6 original, o projeto ainda não havia sido publicado; posteriormente a V6 foi enviada à branch `main` do GitHub. O incremento V7 deste pacote ainda não foi publicado e não há vídeo gravado. O enunciado oficial preservado em `docs/Desafio.md` contém uma exigência de vídeo; a decisão de não incluir vídeo faz parte do escopo desta entrega, não altera essa exigência original.
+
+## Upgrade pós-feedback 9,2 (V7 candidata a 9,8)
+
+Esta versão incrementa a V6 após o feedback V2, com ranking híbrido seguro,
+gates de groundedness, replanejamento reverso limitado, OIDC/JWKS opcional,
+tracing OTLP, SLO operacional, retenção configurável e Docker endurecido.
+**As notas e contagens em relatórios V6 anteriores são históricas.**
+
+Guia técnico, exemplos e pendências de validação: [`docs/EVOLUCAO_FEEDBACK_9_2_PARA_9_8.md`](docs/EVOLUCAO_FEEDBACK_9_2_PARA_9_8.md).
+A versão nova não foi reavaliada nem recebeu nota 9,8; a avaliação factual
+com provedores externos e labels humanos é obrigatória antes dessa conclusão.
+
+
+## Auditoria incremental V8.2 — feedback 9,2 e meta 9,6
+
+Consulte [`docs/AUDITORIA_FEEDBACK_9_2_META_9_6.md`](docs/AUDITORIA_FEEDBACK_9_2_META_9_6.md)
+para separar o que já está implementado das lacunas **ainda não resolvidas**.
+Esta revisão adiciona gates operacionais por janela, supervisor sensível à qualidade
+da evidência, calibração factual mais balanceada e benchmark offline de 22 decisões.
+É possível desenvolver sem créditos da API OpenAI. Os testes sintéticos não
+comprovam factualidade de LLM; o sistema permanece **single-instance / SQLite**.
+
+```bash
+python -m scripts.offline_quality_scorecard
+python -m scripts.offline_supervisor_scorecard
+python -m pytest -q --cov=app --cov-report=term-missing --cov-fail-under=90
+```
+
+Opcional para tracing local sem cobrança por tokens: `docker compose -f
+docker-compose.yml -f docker-compose.observability.yml up --build` e acesse
+`http://127.0.0.1:16686`. O ambiente Docker precisa ser validado separadamente.
+
+
+## V8.3 — revisão concentrada pós-feedback
+
+A evolução dirigida aos três gaps de **RAG/factualidade**, **infraestrutura**
+e **supervisor/memória longa** está documentada em
+[`docs/REVISAO_FOCADA_TRES_PILARES_V8_3.md`](docs/REVISAO_FOCADA_TRES_PILARES_V8_3.md).
+
+Para desenvolver offline sem créditos OpenAI: `python -m scripts.offline_long_turn_scorecard`
+e `python -m pytest -q`. O backend central PostgreSQL é **opcional**;
+`REPLICAS>1` continua bloqueado até haver um índice vetorial compartilhado
+seguro. A comparação real A/B de retrieval depende de dataset humano revisado
+e, com embeddings OpenAI, pode consumir créditos, portanto não roda no CI offline.

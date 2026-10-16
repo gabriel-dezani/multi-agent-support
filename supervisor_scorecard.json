@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "scope": "developer-labeled_deterministic_supervisor_only",
+  "external_api_calls": 0,
+  "cases": 22,
+  "failures": [],
+  "human_reviewed": false,
+  "dataset_sha256": "c4aa5d7a697b99092d04ccf168cf357f3c0fe121d52e908cfc9b772f69c3c267"
+}

@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 
 from app.core.config import get_settings
 from app.core.usage import read_usage
+from app.core.upstream import UpstreamUnavailable, classify_provider_error
 from app.orchestration.context import contextual_user_anchor
 
 SpecialistRoute = Literal["knowledge", "customer_support", "web_search", "human_escalation"]
@@ -255,6 +256,10 @@ class RouterAgent:
             try:
                 return self._route_llm(message, history)
             except Exception as exc:
+                if classify_provider_error(exc):
+                    # Broken provider credentials/quotas must not silently
+                    # generate a customer-facing human handoff ticket.
+                    raise UpstreamUnavailable('AI provider unavailable') from exc
                 # Provider failure is visible to trace/metrics but never leaks
                 # exception bodies (which may contain request data or secrets).
                 fallback = self._route_fallback(message, history)

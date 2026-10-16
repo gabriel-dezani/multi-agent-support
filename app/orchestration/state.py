@@ -38,3 +38,4 @@ class AgentState(TypedDict, total=False):
     usage_complete: bool
     retrieval: dict[str, float | int]
     web_getnet_only: bool
+    rag_getnet_recovery: bool

@@ -1,0 +1,27 @@
+CORRECAO V8 - DUAS FALHAS DE INTEGRACAO
+
+Conteudo deste ZIP:
+- app/api/routes.py
+- tests/integration/test_final_boundaries.py
+
+1) Feche o servidor Uvicorn, se estiver em execucao.
+2) Extraia o ZIP.
+3) Copie as pastas app e tests para a RAIZ do seu projeto V8:
+   C:\Users\Nitro\Downloads\Projetos\multi-agent-support\multi-agent-support
+4) Escolha mesclar pastas e substituir APENAS os dois arquivos acima.
+5) Abra o terminal do PyCharm (.venv) e execute:
+   python -m pytest -q
+
+Nao mova/deleta .venv, .env ou outras pastas.
+Nao exige credenciais OpenAI ou chamadas pagas.
+
+Detalhes:
+- HTTP Bearer scheme aceita maiusculas e minusculas por padrao HTTP.
+  Agora o teste exige que tokens incorretos continuem rejeitados, mas que
+  um bearer valido com caixa diferente seja aceito.
+- UpstreamUnavailable preserva seu tratamento 503 padronizado mesmo quando
+  ocorre dentro de _chat. Sem ticket humano ou registro de memoria indevido.
+
+Validacao neste ambiente: compilacao OK; 13 testes unitarios offline
+aprovados; scorecard 54 cenarios OK. Testes integrados completos devem ser
+reexecutados na sua maquina, pois aqui faltam dependencias de runtime.

@@ -16,11 +16,13 @@ from app.agents.support import CustomerSupportAgent
 from app.agents.synthesis import SynthesisAgent
 from app.agents.web_search_agent import WebSearchAgent
 from app.orchestration.state import AgentState
-from app.orchestration.review_policy import choose_next, prepare_review, unresolved
+from app.orchestration.review_policy import (choose_next, prepare_review, unresolved,
+                                            bounded_replan, usable_specialist_result)
 from app.orchestration.privacy import (safe_public_search_query, safe_official_getnet_query,
                                        public_getnet_recovery_allowed)
 from app.core.config import get_settings
 from app.core.usage import add_usage, cost_usd
+from app.core.upstream import UpstreamUnavailable
 
 log = structlog.get_logger(__name__)
 ALLOWED = ("knowledge", "customer_support", "web_search")
@@ -79,7 +81,9 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
                  "confidence": float(result.get("confidence", 0)),
                  "requires_human": bool(result.get("requires_human", False)),
                  "partial_answer": str(result.get("partial_answer", "")),
-                 "handoff_reason": result.get("handoff_reason", "")}
+                 "handoff_reason": result.get("handoff_reason", ""),
+                 "errors": result.get('errors', []),
+                 "provider_unavailable": bool(result.get("provider_unavailable", False))}
         latency = round((perf_counter() - t0) * 1000, 2)
         log.info("specialist_completed", agent=name, duration_ms=latency,
                  requires_human=entry["requires_human"])
@@ -90,13 +94,15 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
                 "agents_used": [*s.get("agents_used", []), name],
                 "current_step": s.get("current_step", 0) + 1,
                 "traces": [*s.get("traces", []), *result.get("tool_spans", []), {"agent": name, "duration_ms": latency,
-                  "status": "needs_human" if entry["requires_human"] else "ok",
+                  "status": ("unavailable" if entry["provider_unavailable"] else
+                             "needs_human" if entry["requires_human"] else "ok"),
                   "details": {"usage": result.get("usage", {}), "retrieval": result.get("retrieval", {}),
                               "error_codes": result.get("errors", [])}}],
                 "errors": [*s.get("errors", []), *result.get("errors", [])],
                 "usage": add_usage(s.get("usage", {}), result.get("usage", {})),
                 "usage_complete": (s.get("usage_complete", True) and
-                    (bool(result.get("usage")) if result.get("usage_expected", "usage" in result) else True)),
+                    (bool(result.get("usage")) if result.get("usage_expected", "usage" in result) else True)
+                    and result.get("usage_complete", True)),
                 "retrieval": result.get("retrieval", s.get("retrieval", {}))}
 
     def run_knowledge(s):
@@ -105,6 +111,8 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
         try:
             know = know or KnowledgeAgent()
             result = know.process(s["message"], history=s.get("history", []))
+        except UpstreamUnavailable:
+            raise
         except Exception as exc:
             result = {"answer": "Falha na consulta RAG.", "confidence": 0.0,
                       "requires_human": True, "handoff_reason": "RAG indisponível",
@@ -120,6 +128,28 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
                       "requires_human": True, "handoff_reason": "Suporte indisponível",
                       "errors": ["customer_support:" + type(exc).__name__]}
         return record(s, "customer_support", result, t0)
+
+    def web_provider_unavailable(s, started):
+        """Preserve an already verified partial answer without inventing a ticket.
+
+        Web-only outages surface as HTTP 503 unless a public Getnet question
+        has a safe, still-untried local RAG alternative within the plan budget.
+        Successful previous specialists can support a degraded partial answer.
+        """
+        if not any(usable_specialist_result(r) for r in s.get("agent_results", [])):
+            recovery = bounded_replan({**s, 'agent_results': [*s.get('agent_results', []), {
+                'agent':'web_search','answer':'','sources':[], 'confidence':0,
+                'requires_human':True, 'provider_unavailable':True}]},
+                web_available=False,max_agents=get_settings().router_max_agents)
+            if not recovery:
+                raise UpstreamUnavailable("Web provider unavailable")
+        return record(s, "web_search", {
+            "answer": "", "confidence": 0.0, "sources": [], "tools_used": ["web_search"],
+            "requires_human": False, "provider_unavailable": True,
+            "errors": ["web_search:provider_unavailable"],
+            "tool_spans": [{"agent": "tool:web_search", "status": "unavailable",
+                            "duration_ms": round((perf_counter()-started)*1000, 2)}],
+        }, started)
 
     async def run_web(s):
         nonlocal ws
@@ -142,7 +172,14 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
                     raise ValueError("unsafe public search query")
                 result = await asyncio.wait_for(ws.process(public, history=[]),
                                                 timeout=get_settings().request_timeout_seconds)
+        except UpstreamUnavailable:
+            return web_provider_unavailable(s, t0)
+        except (asyncio.TimeoutError, ConnectionError):
+            return web_provider_unavailable(s, t0)
         except Exception as exc:
+            from app.core.upstream import classify_provider_error
+            if classify_provider_error(exc):
+                return web_provider_unavailable(s, t0)
             result = {"answer": "Falha na busca web.", "confidence": 0.0,
                       "requires_human": True, "handoff_reason": "Busca web indisponível",
                       "errors": ["web_search:" + type(exc).__name__], "usage_expected": True}
@@ -151,18 +188,14 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
     def review(s):
         t0 = perf_counter()
         decision = prepare_review(s)
-        # Bounded replanning: try official Getnet public search once if RAG
-        # lacked evidence. Customer data can never cross this boundary.
-        latest = (s.get("agent_results") or [{}])[-1]
-        safe_public = public_getnet_recovery_allowed(s.get("message", ""))
-        replanned = False
-        if (latest.get("agent") == "knowledge" and latest.get("requires_human") and
-                safe_public and "customer_support" not in s.get("plan", []) and
-                "web_search" not in s.get("plan", []) and
-                len(s.get("plan", [])) < 3 and bool(get_settings().tavily_api_key)):
-            log.info("supervisor_replanning", from_agent="knowledge", to_agent="web_search")
-            decision.update({"plan": [*s["plan"], "web_search"], "web_getnet_only": True})
-            replanned = True
+        # Review actual specialist evidence, within strict allowlist/plan budget.
+        replan = bounded_replan(s, web_available=bool(get_settings().tavily_api_key),
+                                max_agents=get_settings().router_max_agents)
+        replanned = bool(replan)
+        if replanned:
+            log.info("supervisor_replanning", from_agent=s["agent_results"][-1].get("agent"),
+                     to_agent=replan["plan"][-1])
+            decision.update(replan)
         decision["traces"] = [*s.get("traces", []), {
             "agent": "supervisor", "duration_ms": round((perf_counter()-t0)*1000, 2),
             "status": "replan" if replanned else ("unresolved" if decision.get("unresolved_agents") else "ok"),
@@ -174,7 +207,8 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
 
     def synthesize(s):
         t0 = perf_counter()
-        selected = [r for r in s.get("agent_results", []) if not r.get("requires_human")]
+        selected = [r for r in s.get("agent_results", [])
+                    if not r.get("requires_human") and not r.get("provider_unavailable")]
         try:
             result = syn.process(s["message"], selected, history=s.get("history", []))
             if not isinstance(result, dict) or not str(result.get("answer") or "").strip():
@@ -190,7 +224,13 @@ def build_graph(guardrail=None, router=None, knowledge=None, support=None, web=N
                       "errors": ["synthesis:" + type(exc).__name__], "usage_expected": True}
         multi = len(selected) > 1
         name = "synthesis" if multi else selected[0]["agent"]
-        return {"agent": name, "answer": result["answer"],
+        answer = result["answer"]
+        if (any(r.get("provider_unavailable") for r in s.get("agent_results", []))
+                and not (s.get('rag_getnet_recovery') and not unresolved(s))):
+            answer = (answer.rstrip() + "\n\n"
+                      "A consulta pública está temporariamente indisponível; "
+                      "essa parte da solicitação não foi respondida.")
+        return {"agent": name, "answer": answer,
                 "confidence": result.get("confidence", 0), "requires_human": bool(result.get("requires_human")),
                 "usage": add_usage(s.get("usage", {}), result.get("usage", {})),
                 "usage_complete": (s.get("usage_complete", True) and
