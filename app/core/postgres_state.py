@@ -100,6 +100,10 @@ class PostgresConversationMemoryStore:
                 content TEXT NOT NULL, request_id TEXT,
                 created_at TEXT NOT NULL DEFAULT to_char(CURRENT_TIMESTAMP AT TIME ZONE 'UTC','YYYY-MM-DD HH24:MI:SS'))""")
             db.execute("CREATE INDEX IF NOT EXISTS idx_conversation_messages ON conversation_messages(conversation_id,user_id,id)")
+            # Idempotency probes run for every turn. Avoid scanning the growing
+            # conversation (including all prior payloads) for each request.
+            db.execute("CREATE INDEX IF NOT EXISTS idx_conversation_requests "
+                       "ON conversation_messages(conversation_id,user_id,request_id,id)")
             db.execute("CREATE INDEX IF NOT EXISTS idx_conversation_retention ON conversation_messages(created_at)")
             from app.memory.topics import migrate_topics
             migrate_topics(db, postgres=True)
